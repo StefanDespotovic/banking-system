@@ -123,7 +123,7 @@ function TransactionsModal({ closeModal, transactions }) {
                     <Date>{`${transaction.date} ${transaction.time}`}</Date>
                   </div>
                   <div>
-                    <Price>{-transaction.price}</Price>
+                    <Price>{transaction.price}</Price>
                     <Currency>{transaction.currency}</Currency>
                   </div>
                 </TransactionItem>

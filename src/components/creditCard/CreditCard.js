@@ -52,7 +52,7 @@ const CreditCard = ({ accountType, cardBrand, balance, transactionNumber }) => {
         <CardBrand>{cardBrand}</CardBrand>
       </HeaderWrapper>
       <Balance>{`$${balance}`}</Balance>
-      <TransactionNumber>{`Transactions: ${transactionNumber}`}</TransactionNumber>
+      <TransactionNumber>{`Transaction number: ${transactionNumber}`}</TransactionNumber>
     </CardWrapper>
   );
 };

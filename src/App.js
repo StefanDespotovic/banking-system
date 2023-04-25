@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import CreditCard from "./components/creditCard/CreditCard";
 import Transactions from "./components/transactions/Transactions";
+import AddBalance from "./components/addBalance/AddBalance";
+// import Chart from "./components/chart/Chart";
+import styled from "styled-components";
+
+const Card = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 7vh;
+  margin-left: 3vw;
+`;
+const History = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  top: 12vh;
+  margin-left: 3vw;
+`;
+const Balance = styled.div`
+  position: relative;
+  margin-left: 30vw;
+  bottom: 62vh;
+`;
 
 const transactions = [
   {
@@ -8,7 +31,7 @@ const transactions = [
     seller: "Amazon",
     date: "Apr 20, 2023",
     time: "10:00 AM",
-    price: "99.99",
+    price: "-99.99",
     currency: "USD",
   },
   {
@@ -16,7 +39,7 @@ const transactions = [
     seller: "Apple",
     date: "Apr 19, 2023",
     time: "2:30 PM",
-    price: "799.00",
+    price: "-799.00",
     currency: "USD",
   },
   {
@@ -24,7 +47,7 @@ const transactions = [
     seller: "Starbucks",
     date: "Apr 18, 2023",
     time: "9:45 AM",
-    price: "3.50",
+    price: "-3.50",
     currency: "USD",
   },
   {
@@ -32,21 +55,42 @@ const transactions = [
     seller: "Netflix",
     date: "Apr 17, 2023",
     time: "8:00 PM",
-    price: "14.99",
+    price: "-14.99",
+    currency: "USD",
+  },
+  {
+    id: 5,
+    seller: "Sallary",
+    date: "Apr 15, 2023",
+    time: "12:00 PM",
+    price: "+980.00",
     currency: "USD",
   },
 ];
 
 const App = () => {
+  const [balance, setBalance] = useState(1000);
+
+  const handleAddBalance = (amount) => {
+    setBalance((prevBalance) => prevBalance + amount);
+  };
   return (
     <>
-      <CreditCard
-        accountType="Credit Card"
-        cardBrand="Visa"
-        balance="1000.00"
-        transactionNumber="1613000082767244"
-      />
-      <Transactions transactions={transactions} />
+      <Card>
+        <CreditCard
+          accountType="Credit Card"
+          cardBrand="Visa"
+          balance={balance.toFixed(2)}
+          transactionNumber="1613000082767244"
+        />
+      </Card>
+      <History>
+        <Transactions transactions={transactions} />
+      </History>
+      <Balance>
+        <AddBalance onAdd={handleAddBalance} />
+      </Balance>
+      {/* <Chart /> */}
     </>
   );
 };
