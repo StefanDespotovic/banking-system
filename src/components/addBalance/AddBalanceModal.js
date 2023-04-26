@@ -56,19 +56,27 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
-function AddBalanceModal({ closeModal }) {
-  const AddBalance = ({ onAdd }) => {
+function AddBalanceModal({ onAdd, closeModal }) {
+  const AddBalance = ({ onAdd, closeModal }) => {
     const [value, setValue] = useState("");
+    const [textValue, setTextValue] = useState("");
 
     const handleChange = (event) => {
       const input = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
       setValue(input);
     };
 
+    const handleTextChange = (event) => {
+      const input = event.target.value;
+      setTextValue(input);
+    };
+
     const handleClick = () => {
-      if (value) {
-        onAdd(parseFloat(value));
+      if (value || textValue) {
+        onAdd(parseFloat(value), textValue);
+        closeModal();
         setValue("");
+        setTextValue("");
       }
     };
 
@@ -92,8 +100,13 @@ function AddBalanceModal({ closeModal }) {
           <Modal>
             <ModalContent ref={modalRef}>
               <Title>Add Balance</Title>
-              <input type="text" value={value} onChange={handleChange} />
-              <button onClick={handleClick}>Add Balance</button>
+              <input
+                type="text"
+                value={textValue}
+                onChange={handleTextChange}
+              />
+              <input type="number" value={value} onChange={handleChange} />
+              <Button onClick={handleClick}>Add Balance</Button>
               <Button onClick={closeModal}>Close</Button>
             </ModalContent>
           </Modal>
@@ -102,7 +115,7 @@ function AddBalanceModal({ closeModal }) {
     );
   };
 
-  return <AddBalance />;
+  return <AddBalance onAdd={onAdd} closeModal={closeModal} />;
 }
 
 export default AddBalanceModal;

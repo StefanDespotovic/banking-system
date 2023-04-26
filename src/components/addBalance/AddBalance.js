@@ -37,7 +37,7 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
-const Transactions = ({ transactions }) => {
+const AddBalance = ({ transactions, handleAddBalance }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -47,14 +47,16 @@ const Transactions = ({ transactions }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <Wrapper>
       <Title>Add Balance</Title>
-
       <Button onClick={openModal}>Add Balance</Button>
-      {isModalOpen && <AddBalanceModal closeModal={closeModal} />}
+      {isModalOpen && (
+        <AddBalanceModal onAdd={handleAddBalance} closeModal={closeModal} />
+      )}
     </Wrapper>
   );
 };
 
-export default Transactions;
+export default AddBalance;

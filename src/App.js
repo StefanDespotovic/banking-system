@@ -25,55 +25,63 @@ const Balance = styled.div`
   bottom: 62vh;
 `;
 
-const transactions = [
-  {
-    id: 1,
-    seller: "Amazon",
-    date: "Apr 20, 2023",
-    time: "10:00 AM",
-    price: "-99.99",
-    currency: "USD",
-  },
-  {
-    id: 2,
-    seller: "Apple",
-    date: "Apr 19, 2023",
-    time: "2:30 PM",
-    price: "-799.00",
-    currency: "USD",
-  },
-  {
-    id: 3,
-    seller: "Starbucks",
-    date: "Apr 18, 2023",
-    time: "9:45 AM",
-    price: "-3.50",
-    currency: "USD",
-  },
-  {
-    id: 4,
-    seller: "Netflix",
-    date: "Apr 17, 2023",
-    time: "8:00 PM",
-    price: "-14.99",
-    currency: "USD",
-  },
-  {
-    id: 5,
-    seller: "Sallary",
-    date: "Apr 15, 2023",
-    time: "12:00 PM",
-    price: "+980.00",
-    currency: "USD",
-  },
-];
-
 const App = () => {
   const [balance, setBalance] = useState(1000);
-
-  const handleAddBalance = (amount) => {
-    setBalance((prevBalance) => prevBalance + amount);
+  const [transactions, setTransactions] = useState([
+    {
+      id: 1,
+      seller: "Amazon",
+      date: "Apr 20, 2023",
+      time: "10:00 AM",
+      price: "-99.99",
+      currency: "USD",
+    },
+    {
+      id: 2,
+      seller: "Apple",
+      date: "Apr 19, 2023",
+      time: "2:30 PM",
+      price: "-799.00",
+      currency: "USD",
+    },
+    {
+      id: 3,
+      seller: "Starbucks",
+      date: "Apr 18, 2023",
+      time: "9:45 AM",
+      price: "-3.50",
+      currency: "USD",
+    },
+    {
+      id: 4,
+      seller: "Netflix",
+      date: "Apr 17, 2023",
+      time: "8:00 PM",
+      price: "-14.99",
+      currency: "USD",
+    },
+    {
+      id: 5,
+      seller: "Sallary",
+      date: "Apr 15, 2023",
+      time: "12:00 PM",
+      price: "+980.00",
+      currency: "USD",
+    },
+  ]);
+  const handleAddBalance = (amount, seller) => {
+    const newTransaction = {
+      id: Math.floor(Math.random() * 100000),
+      seller: seller,
+      date: new Date().toLocaleDateString(),
+      time: new Date().toLocaleTimeString(),
+      price: `+${parseFloat(amount).toFixed(2)}`,
+      currency: "USD",
+    };
+    setTransactions([newTransaction, ...transactions]);
+    setBalance((prevBalance) => prevBalance + parseFloat(amount));
   };
+
   return (
     <>
       <Card>
@@ -88,7 +96,7 @@ const App = () => {
         <Transactions transactions={transactions} />
       </History>
       <Balance>
-        <AddBalance onAdd={handleAddBalance} />
+        <AddBalance handleAddBalance={handleAddBalance} />
       </Balance>
       {/* <Chart /> */}
     </>
