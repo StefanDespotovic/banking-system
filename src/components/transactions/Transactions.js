@@ -94,11 +94,11 @@ const Transactions = ({ transactions }) => {
         {recentTransactions.map((transaction) => (
           <TransactionItem key={transaction.id}>
             <div>
-              <SellerName>{transaction.seller}</SellerName>
+              <SellerName>{transaction.seller_sender_name}</SellerName>
               <Date>{`${transaction.date} ${transaction.time}`}</Date>
             </div>
             <div>
-              <Price>{transaction.price}</Price>
+              <Price>{transaction.value}</Price>
               <Currency>{transaction.currency}</Currency>
             </div>
           </TransactionItem>

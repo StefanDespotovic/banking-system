@@ -44,7 +44,12 @@ const TransactionNumber = styled.div`
   text-align: center;
 `;
 
-const CreditCard = ({ accountType, cardBrand, balance, transactionNumber }) => {
+const CreditCard = ({
+  accountType,
+  cardBrand,
+  balance,
+  transaction_number,
+}) => {
   return (
     <CardWrapper>
       <HeaderWrapper>
@@ -52,7 +57,7 @@ const CreditCard = ({ accountType, cardBrand, balance, transactionNumber }) => {
         <CardBrand>{cardBrand}</CardBrand>
       </HeaderWrapper>
       <Balance>{`$${balance}`}</Balance>
-      <TransactionNumber>{`Transaction number: ${transactionNumber}`}</TransactionNumber>
+      <TransactionNumber>{`Transaction number: ${transaction_number}`}</TransactionNumber>
     </CardWrapper>
   );
 };
