@@ -91,7 +91,8 @@ const Login = ({ setLoggedIn, onLogin }) => {
       });
 
       if (response.ok) {
-        onLogin(username, password);
+        const data = await response.json();
+        onLogin(data.userId, username, password);
         navigate("/main");
       } else {
         const data = await response.json();

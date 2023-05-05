@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CreditCard from "../creditCard/CreditCard";
 import Transactions from "../transactions/Transactions";
 import AddBalance from "../addBalance/AddBalance";
@@ -25,62 +25,47 @@ const Balance = styled.div`
   bottom: 62vh;
 `;
 
-const Main = () => {
-  const [balance, setBalance] = useState(1000);
-  const [transactions, setTransactions] = useState([
-    {
-      id: 1,
-      seller: "Amazon",
-      date: "Apr 20, 2023",
-      time: "10:00 AM",
-      price: "-99.99",
-      currency: "USD",
-    },
-    {
-      id: 2,
-      seller: "Apple",
-      date: "Apr 19, 2023",
-      time: "2:30 PM",
-      price: "-799.00",
-      currency: "USD",
-    },
-    {
-      id: 3,
-      seller: "Starbucks",
-      date: "Apr 18, 2023",
-      time: "9:45 AM",
-      price: "-3.50",
-      currency: "USD",
-    },
-    {
-      id: 4,
-      seller: "Netflix",
-      date: "Apr 17, 2023",
-      time: "8:00 PM",
-      price: "-14.99",
-      currency: "USD",
-    },
-    {
-      id: 5,
-      seller: "Sallary",
-      date: "Apr 15, 2023",
-      time: "12:00 PM",
-      price: "+980.00",
-      currency: "USD",
-    },
-  ]);
-  const handleAddBalance = (amount, seller) => {
-    const newTransaction = {
-      id: Math.floor(Math.random() * 100000),
-      seller: seller,
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
-      price: `+${parseFloat(amount).toFixed(2)}`,
-      currency: "USD",
+const Main = ({ userId }) => {
+  const [balance, setBalance] = useState(0);
+  const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/users?id=${userId}`
+        );
+        if (response.ok) {
+          const user = await response.json();
+          console.log("User data: ", user);
+          setBalance(user.balance);
+        } else {
+          console.error("Error fetching user data");
+        }
+      } catch (error) {
+        console.error("Error connecting to server", error);
+      }
     };
-    setTransactions([newTransaction, ...transactions]);
-    setBalance((prevBalance) => prevBalance + parseFloat(amount));
-  };
+
+    const fetchTransactionsData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/transactions?user_id=${userId}`
+        );
+        if (response.ok) {
+          const transactions = await response.json();
+          setTransactions(transactions);
+        } else {
+          console.error("Error fetching transactions data");
+        }
+      } catch (error) {
+        console.error("Error connecting to server", error);
+      }
+    };
+
+    fetchUserData();
+    fetchTransactionsData();
+  }, [userId]);
 
   return (
     <>
@@ -88,15 +73,15 @@ const Main = () => {
         <CreditCard
           accountType="Credit Card"
           cardBrand="Visa"
-          balance={balance.toFixed(2)}
-          transactionNumber="1613000082767244"
+          balance={balance}
+          transaction_number=""
         />
       </Card>
       <History>
         <Transactions transactions={transactions} />
       </History>
       <Balance>
-        <AddBalance handleAddBalance={handleAddBalance} />
+        <AddBalance setBalance={setBalance} />
       </Balance>
     </>
   );

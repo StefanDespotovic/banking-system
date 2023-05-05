@@ -33,6 +33,39 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+app.get("/api/users/:id", (req, res) => {
+  const userId = req.params.id;
+
+  const query = "SELECT * FROM users WHERE id = ?";
+  const values = [userId];
+
+  connection.query(query, values, (error, results) => {
+    if (error) {
+      console.error("Error fetching user: ", error);
+      res.status(500).json({ error: "Error fetching user" });
+      return;
+    }
+
+    if (results.length > 0) {
+      res.json(results[0]);
+    } else {
+      res.status(404).json({ error: "User not found" });
+    }
+  });
+});
+
+app.get("/api/transactions", (req, res) => {
+  const query = "SELECT * FROM transactions";
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error("Error fetching transactions: ", error);
+      res.status(500).json({ error: "Error fetching transactions" });
+      return;
+    }
+    res.json(results);
+  });
+});
+
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
