@@ -54,6 +54,7 @@ const Main = ({ userId }) => {
         );
         if (response.ok) {
           const transactions = await response.json();
+          console.log("Transactions data: ", transactions);
           setTransactions(transactions);
         } else {
           console.error("Error fetching transactions data");
