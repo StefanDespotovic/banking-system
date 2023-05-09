@@ -27,18 +27,19 @@ const Balance = styled.div`
 
 const Main = ({ userId }) => {
   const [balance, setBalance] = useState(0);
+  const [transactionNumber, setTransactionNumber] = useState("");
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/users?id=${userId}`
+          `http://localhost:5000/api/users/${userId}`
         );
         if (response.ok) {
           const user = await response.json();
-          console.log("User data: ", user);
           setBalance(user.balance);
+          setTransactionNumber(user.transaction_number);
         } else {
           console.error("Error fetching user data");
         }
@@ -78,6 +79,8 @@ const Main = ({ userId }) => {
           transaction_number=""
         />
       </Card>
+      <p>Balance: ${balance.toFixed(2)}</p>
+      <p>Transaction Number: {transactionNumber}</p>
       <History>
         <Transactions transactions={transactions} />
       </History>
