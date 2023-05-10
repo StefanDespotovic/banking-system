@@ -79,6 +79,11 @@ const ModalOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 2;
 `;
+const History = styled.div`
+  text-align: center;
+  color: #6c757d;
+  margin-bottom: 2vh;
+`;
 
 const Button = styled.button`
   background-color: #007bff;
@@ -115,20 +120,24 @@ function TransactionsModal({ closeModal, transactions }) {
         <Modal>
           <ModalContent ref={modalRef}>
             <Title>Transaction History</Title>
-            <TransactionList>
-              {transactions?.map((transaction) => (
-                <TransactionItem key={transaction.id}>
-                  <div>
-                    <SellerName>{transaction.seller_sender_name}</SellerName>
-                    <Date>{`${transaction.date} ${transaction.time}`}</Date>
-                  </div>
-                  <div>
-                    <Price>-{transaction.value}</Price>
-                    <Currency>USD</Currency>
-                  </div>
-                </TransactionItem>
-              ))}
-            </TransactionList>
+            {transactions.length > 0 ? (
+              <TransactionList>
+                {transactions?.map((transaction) => (
+                  <TransactionItem key={transaction.id}>
+                    <div>
+                      <SellerName>{transaction.seller_sender_name}</SellerName>
+                      <Date>{`${transaction.date} ${transaction.time}`}</Date>
+                    </div>
+                    <div>
+                      <Price>-{transaction.value}</Price>
+                      <Currency>USD</Currency>
+                    </div>
+                  </TransactionItem>
+                ))}
+              </TransactionList>
+            ) : (
+              <History>No transaction history available.</History>
+            )}
             <Button onClick={closeModal}>Close</Button>
           </ModalContent>
         </Modal>

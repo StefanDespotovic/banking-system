@@ -56,66 +56,70 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
+
 function AddBalanceModal({ onAdd, closeModal }) {
-  const AddBalance = ({ onAdd, closeModal }) => {
-    const [value, setValue] = useState("");
-    const [textValue, setTextValue] = useState("");
+  const [value, setValue] = useState("");
+  const [textValue, setTextValue] = useState("");
 
-    const handleChange = (event) => {
-      const input = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
-      setValue(input);
-    };
-
-    const handleTextChange = (event) => {
-      const input = event.target.value;
-      setTextValue(input);
-    };
-
-    const handleClick = () => {
-      if (value || textValue) {
-        onAdd(parseFloat(value), textValue);
-        closeModal();
-        setValue("");
-        setTextValue("");
-      }
-    };
-
-    const modalRef = useRef(null);
-
-    useEffect(() => {
-      function handleClickOutside(event) {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-          closeModal();
-        }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    });
-
-    return (
-      <>
-        <ModalOverlay>
-          <Modal>
-            <ModalContent ref={modalRef}>
-              <Title>Add Balance</Title>
-              <input
-                type="text"
-                value={textValue}
-                onChange={handleTextChange}
-              />
-              <input type="number" value={value} onChange={handleChange} />
-              <Button onClick={handleClick}>Add Balance</Button>
-              <Button onClick={closeModal}>Close</Button>
-            </ModalContent>
-          </Modal>
-        </ModalOverlay>
-      </>
-    );
+  const handleChange = (event) => {
+    const input = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+    setValue(input);
   };
 
-  return <AddBalance onAdd={onAdd} closeModal={closeModal} />;
+  const handleTextChange = (event) => {
+    const input = event.target.value;
+    setTextValue(input);
+  };
+
+  const handleClick = () => {
+    if (value || textValue) {
+      // Call the onAdd function to update the balance and add a new transaction
+      onAdd(parseFloat(value), textValue);
+      closeModal();
+      setValue("");
+      setTextValue("");
+    }
+  };
+
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        closeModal();
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  });
+
+  return (
+    <>
+      <ModalOverlay>
+        <Modal>
+          <ModalContent ref={modalRef}>
+            <Title>Add Balance</Title>
+            <input
+              type="text"
+              value={textValue}
+              onChange={handleTextChange}
+              placeholder="Seller/Sender Name"
+            />
+            <input
+              type="number"
+              value={value}
+              onChange={handleChange}
+              placeholder="Value"
+            />
+            <Button onClick={handleClick}>Add Balance</Button>
+            <Button onClick={closeModal}>Close</Button>
+          </ModalContent>
+        </Modal>
+      </ModalOverlay>
+    </>
+  );
 }
 
 export default AddBalanceModal;

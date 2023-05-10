@@ -59,6 +59,11 @@ const Currency = styled.div`
   font-size: 12px;
   color: #6c757d;
 `;
+const History = styled.div`
+  text-align: center;
+  color: #6c757d;
+  margin-bottom: 2vh;
+`;
 
 const Button = styled.button`
   background-color: #007bff;
@@ -90,20 +95,24 @@ const Transactions = ({ transactions }) => {
   return (
     <Wrapper>
       <Title>Transaction History</Title>
-      <TransactionList>
-        {recentTransactions.map((transaction) => (
-          <TransactionItem key={transaction.id}>
-            <div>
-              <SellerName>{transaction.seller_sender_name}</SellerName>
-              <Date>{`${transaction.date} ${transaction.time}`}</Date>
-            </div>
-            <div>
-              <Price>-{transaction.value}</Price>
-              <Currency>USD</Currency>
-            </div>
-          </TransactionItem>
-        ))}
-      </TransactionList>
+      {recentTransactions.length > 0 ? (
+        <TransactionList>
+          {recentTransactions.map((transaction) => (
+            <TransactionItem key={transaction.id}>
+              <div>
+                <SellerName>{transaction.seller_sender_name}</SellerName>
+                <Date>{`${transaction.date} ${transaction.time}`}</Date>
+              </div>
+              <div>
+                <Price>-{transaction.value}</Price>
+                <Currency>USD</Currency>
+              </div>
+            </TransactionItem>
+          ))}
+        </TransactionList>
+      ) : (
+        <History>No transaction history available.</History>
+      )}
       <Button onClick={openModal}>See All Transactions</Button>
       {isModalOpen && (
         <TransactionsModal

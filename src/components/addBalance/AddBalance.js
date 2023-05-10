@@ -37,8 +37,10 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
-const AddBalance = ({ transactions, handleAddBalance }) => {
+const AddBalance = ({ handleAddBalance }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [sellerSenderName, setSellerSenderName] = useState("");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -48,12 +50,38 @@ const AddBalance = ({ transactions, handleAddBalance }) => {
     setIsModalOpen(false);
   };
 
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const handlesellerSenderNameChange = (event) => {
+    setSellerSenderName(event.target.value);
+  };
+
+  const handleAddBalanceClick = () => {
+    if (value && sellerSenderName) {
+      handleAddBalance(parseFloat(value), sellerSenderName);
+      closeModal();
+      setValue("");
+      setSellerSenderName("");
+    }
+  };
+
   return (
     <Wrapper>
       <Title>Add Balance</Title>
       <Button onClick={openModal}>Add Balance</Button>
       {isModalOpen && (
-        <AddBalanceModal onAdd={handleAddBalance} closeModal={closeModal} />
+        <div>
+          <input
+            type="text"
+            value={sellerSenderName}
+            onChange={handlesellerSenderNameChange}
+          />
+          <input type="number" value={value} onChange={handleChange} />
+          <button onClick={handleAddBalanceClick}>Add Balance</button>
+          <button onClick={closeModal}>Close</button>
+        </div>
       )}
     </Wrapper>
   );

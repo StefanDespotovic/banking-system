@@ -21,6 +21,7 @@ connection.connect((error) => {
 
 app.use(bodyParser.json());
 
+//////////////// for testing fetching all users
 app.get("/api/users", (req, res) => {
   const query = "SELECT * FROM users";
   connection.query(query, (error, results) => {
@@ -33,6 +34,7 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+////////////////////////// display logged user balance and trn
 app.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
 
@@ -53,6 +55,8 @@ app.get("/api/users/:id", (req, res) => {
     }
   });
 });
+
+/////////////// list of transactions history
 app.get("/api/transactions", (req, res) => {
   const userId = req.query.user_id;
   const query = "SELECT * FROM transactions WHERE user_id = ?";
@@ -66,6 +70,63 @@ app.get("/api/transactions", (req, res) => {
   });
 });
 
+//////////////////////////////////// add balance
+app.post("/api/balance", (req, res) => {
+  const { userId, sellerSenderName, value } = req.body;
+
+  // Retrieve the current balance and transaction number for the user
+  const getBalanceQuery = "SELECT balance FROM users WHERE id = ?";
+  const getBalanceValues = [userId];
+
+  connection.query(getBalanceQuery, getBalanceValues, (error, results) => {
+    if (error) {
+      console.error("Error fetching user balance: ", error);
+      res.status(500).json({ error: "Error fetching user balance" });
+      return;
+    }
+
+    if (results.length === 0) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    const { balance } = results[0];
+    const newBalance = balance + value;
+
+    // Update the balance of the user
+    const updateBalanceQuery = "UPDATE users SET balance = ? WHERE id = ?";
+    const updateBalanceValues = [newBalance, userId];
+
+    connection.query(updateBalanceQuery, updateBalanceValues, (error) => {
+      if (error) {
+        console.error("Error updating user balance: ", error);
+        res.status(500).json({ error: "Error updating user balance" });
+        return;
+      }
+
+      // Create a new transaction entry
+      const createTransactionQuery =
+        "INSERT INTO transactions (user_id, seller_sender_name, value, date, time) VALUES (?, ?, ?, CURDATE(), CURTIME())";
+      const createTransactionValues = [userId, sellerSenderName, value];
+
+      connection.query(
+        createTransactionQuery,
+        createTransactionValues,
+        (error) => {
+          if (error) {
+            console.error("Error creating transaction: ", error);
+            res.status(500).json({ error: "Error creating transaction" });
+            return;
+          }
+          // Return success response
+          res.json({ message: "Balance added successfully" });
+        }
+      );
+    });
+  });
+});
+
+//////////////////////// login
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
