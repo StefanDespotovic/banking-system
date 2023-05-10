@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "@hookform/error-message";
+import { AuthContext } from "../../AuthContext";
+
 import styled from "styled-components";
 
 const LoginModal = styled.div`
@@ -67,11 +69,12 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
-
-const Login = ({ setLoggedIn, onLogin }) => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  const { handleLogin } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -92,7 +95,7 @@ const Login = ({ setLoggedIn, onLogin }) => {
 
       if (response.ok) {
         const data = await response.json();
-        onLogin(data.userId, username, password);
+        handleLogin(data.userId, username, password); // Update the function call here
         navigate("/main");
       } else {
         const data = await response.json();

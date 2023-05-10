@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CreditCard from "../creditCard/CreditCard";
 import Transactions from "../transactions/Transactions";
 import AddBalance from "../addBalance/AddBalance";
-
+import { AuthContext } from "../../AuthContext";
 import styled from "styled-components";
 
 const Card = styled.div`
@@ -24,10 +24,11 @@ const Balance = styled.div`
   margin-left: 30vw;
   bottom: 62vh;
 `;
-
-const Main = ({ userId }) => {
-  const [balance, setBalance] = useState(0);
-  const [transactionNumber, setTransactionNumber] = useState("");
+const Main = () => {
+  const { userId } = useContext(AuthContext);
+  const [userData, setUserData] = useState({}); // Initialize as an empty object
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [transactions, setTransactions] = useState([]);
 
   useEffect(() => {
@@ -37,14 +38,17 @@ const Main = ({ userId }) => {
           `http://localhost:5000/api/users/${userId}`
         );
         if (response.ok) {
-          const user = await response.json();
-          setBalance(user.balance);
-          setTransactionNumber(user.transaction_number);
+          const data = await response.json();
+          setUserData(data);
+          setLoading(false);
         } else {
-          console.error("Error fetching user data");
+          setError("Error fetching user data");
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error connecting to server", error);
+        setError("Error connecting to server");
+        setLoading(false);
       }
     };
 
@@ -58,10 +62,13 @@ const Main = ({ userId }) => {
           console.log("Transactions data: ", transactions);
           setTransactions(transactions);
         } else {
-          console.error("Error fetching transactions data");
+          setError("Error fetching transactions data");
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error connecting to server", error);
+        setError("Error connecting to server");
+        setLoading(false);
       }
     };
 
@@ -69,24 +76,28 @@ const Main = ({ userId }) => {
     fetchTransactionsData();
   }, [userId]);
 
+  if (loading) {
+    return <p>Loading user data...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <>
       <Card>
         <CreditCard
           accountType="Credit Card"
           cardBrand="Visa"
-          balance={balance}
-          transaction_number=""
+          balance={userData.balance}
+          transaction_number={userData.transaction_number}
         />
       </Card>
-      <p>Balance: ${balance.toFixed(2)}</p>
-      <p>Transaction Number: {transactionNumber}</p>
       <History>
         <Transactions transactions={transactions} />
       </History>
-      <Balance>
-        <AddBalance setBalance={setBalance} />
-      </Balance>
+      <Balance>{/* <AddBalance setBalance={setBalance} /> */}</Balance>
     </>
   );
 };

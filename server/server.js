@@ -36,7 +36,7 @@ app.get("/api/users", (req, res) => {
 app.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
 
-  const query = "SELECT * FROM users WHERE id = ?";
+  const query = "SELECT balance, transaction_number FROM users WHERE id = ?";
   const values = [userId];
 
   connection.query(query, values, (error, results) => {
@@ -53,10 +53,10 @@ app.get("/api/users/:id", (req, res) => {
     }
   });
 });
-
 app.get("/api/transactions", (req, res) => {
-  const query = "SELECT * FROM transactions";
-  connection.query(query, (error, results) => {
+  const userId = req.query.user_id;
+  const query = "SELECT * FROM transactions WHERE user_id = ?";
+  connection.query(query, [userId], (error, results) => {
     if (error) {
       console.error("Error fetching transactions: ", error);
       res.status(500).json({ error: "Error fetching transactions" });
@@ -80,7 +80,7 @@ app.post("/api/login", (req, res) => {
     }
 
     if (results.length > 0) {
-      res.json({ success: true });
+      res.json({ userId: results[0].id });
     } else {
       res.status(401).json({ error: "Invalid credentials" });
     }
