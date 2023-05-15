@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "",
-  database: "banking_systems",
+  database: "banking_system",
 });
 
 connection.connect((error) => {
@@ -72,7 +72,7 @@ app.get("/api/transactions", (req, res) => {
 
 //////////////////////////////////// add balance
 app.post("/api/balance", (req, res) => {
-  const { userId, sellerSenderName, value } = req.body;
+  const { userId, seller_sender_name, value } = req.body;
 
   // Retrieve the current balance and transaction number for the user
   const getBalanceQuery = "SELECT balance FROM users WHERE id = ?";
@@ -91,23 +91,23 @@ app.post("/api/balance", (req, res) => {
     }
 
     const { balance } = results[0];
-    const newBalance = balance + value;
+    const newBalance = parseFloat(balance) + parseFloat(value);
 
     // Update the balance of the user
     const updateBalanceQuery = "UPDATE users SET balance = ? WHERE id = ?";
-    const updateBalanceValues = [newBalance, userId];
+    const updateBalanceValues = [newBalance.toFixed(2), userId]; // Format the new balance value with two decimal places
 
     connection.query(updateBalanceQuery, updateBalanceValues, (error) => {
       if (error) {
         console.error("Error updating user balance: ", error);
         res.status(500).json({ error: "Error updating user balance" });
-        return;
+      } else {
       }
 
       // Create a new transaction entry
       const createTransactionQuery =
         "INSERT INTO transactions (user_id, seller_sender_name, value, date, time) VALUES (?, ?, ?, CURDATE(), CURTIME())";
-      const createTransactionValues = [userId, sellerSenderName, value];
+      const createTransactionValues = [userId, seller_sender_name, value];
 
       connection.query(
         createTransactionQuery,

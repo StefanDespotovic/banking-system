@@ -75,6 +75,7 @@ const Main = () => {
   }, [userId]);
 
   const handleAddBalance = async (value, seller_sender_name) => {
+    const numericValue = parseFloat(value).toFixed(2); // Convert the value to a string with 2 decimal places
     try {
       if (!seller_sender_name) {
         setError("Seller/Sender Name is required.");
@@ -88,7 +89,7 @@ const Main = () => {
         },
         body: JSON.stringify({
           userId,
-          value,
+          value: numericValue, // Use the parsed numeric value
           seller_sender_name,
         }),
       });

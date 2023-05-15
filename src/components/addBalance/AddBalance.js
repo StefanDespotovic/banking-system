@@ -39,7 +39,7 @@ const Button = styled.button`
 `;
 const AddBalance = ({ handleAddBalance }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(0);
   const [sellerSenderName, setSellerSenderName] = useState("");
 
   const openModal = () => {
@@ -51,7 +51,7 @@ const AddBalance = ({ handleAddBalance }) => {
   };
 
   const handleChange = (event) => {
-    setValue(event.target.value);
+    setValue(parseFloat(event.target.value));
   };
 
   const handlesellerSenderNameChange = (event) => {
