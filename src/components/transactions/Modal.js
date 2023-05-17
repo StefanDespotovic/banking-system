@@ -18,6 +18,29 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 70vh;
+  overflow-y: scroll;
+
+  /* Hide the scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Adjust the color if needed */
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Adjust the color if needed */
+
+  /* WebKit */
+  &::-webkit-scrollbar {
+    width: 6px; /* Adjust the width if needed */
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
 `;
 
 const TransactionList = styled.ul`
@@ -76,7 +99,7 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
 `;
 const History = styled.div`

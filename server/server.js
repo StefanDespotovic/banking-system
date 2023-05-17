@@ -59,7 +59,8 @@ app.get("/api/users/:id", (req, res) => {
 /////////////// list of transactions history
 app.get("/api/transactions", (req, res) => {
   const userId = req.query.user_id;
-  const query = "SELECT * FROM transactions WHERE user_id = ?";
+  const query =
+    "SELECT * FROM transactions WHERE user_id = ? ORDER BY date DESC, time DESC";
   connection.query(query, [userId], (error, results) => {
     if (error) {
       console.error("Error fetching transactions: ", error);
