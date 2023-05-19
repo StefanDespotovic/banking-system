@@ -107,8 +107,8 @@ app.post("/api/balance", (req, res) => {
 
       // Create a new transaction entry
       const createTransactionQuery =
-        "INSERT INTO transactions (user_id, seller_sender_name, value, date, time) VALUES (?, ?, ?, CURDATE(), CURTIME())";
-      const createTransactionValues = [userId, seller_sender_name, value];
+        "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
+      const createTransactionValues = [userId, seller_sender_name, value, "+"];
 
       connection.query(
         createTransactionQuery,
