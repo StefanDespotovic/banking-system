@@ -105,8 +105,7 @@ const Transactions = ({ transactions }) => {
               </div>
               <div>
                 <Price>
-                  {transaction.sign}
-                  {transaction.value}
+                  {transaction.sign} {transaction.value}
                 </Price>
                 <Currency>USD</Currency>
               </div>
