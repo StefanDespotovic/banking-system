@@ -109,6 +109,7 @@ function AddBalanceModal({ onAdd, closeModal }) {
             />
             <input
               type="number"
+              step="any"
               value={value}
               onChange={handleChange}
               placeholder="Value"

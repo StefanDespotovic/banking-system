@@ -38,7 +38,8 @@ app.get("/api/users", (req, res) => {
 app.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
 
-  const query = "SELECT balance, transaction_number FROM users WHERE id = ?";
+  const query =
+    "SELECT balance, transaction_number, username FROM users WHERE id = ?";
   const values = [userId];
 
   connection.query(query, values, (error, results) => {

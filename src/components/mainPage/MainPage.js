@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import CreditCard from "../creditCard/CreditCard";
 import Transactions from "../transactions/Transactions";
 import AddBalance from "../addBalance/AddBalance";
+import TransferBalance from "../transferBalance/TransferBalance";
 import { AuthContext } from "../../AuthContext";
 import styled from "styled-components";
 
@@ -23,6 +24,11 @@ const Balance = styled.div`
   position: relative;
   margin-left: 30vw;
   bottom: 62vh;
+`;
+const Transfer = styled.div`
+  position: relative;
+  margin-left: 30vw;
+  bottom: 32vh;
 `;
 const Main = () => {
   const { userId } = useContext(AuthContext);
@@ -69,10 +75,13 @@ const Main = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUserData();
-    fetchTransactionsData();
-  }, [userId]);
+  useEffect(
+    () => {
+      fetchUserData();
+      fetchTransactionsData();
+    }, // eslint-disable-next-line
+    [userId]
+  );
 
   const handleAddBalance = async (value, seller_sender_name) => {
     const numericValue = parseFloat(value).toFixed(2); // Convert the value to a string with 2 decimal places
@@ -131,6 +140,9 @@ const Main = () => {
       <Balance>
         <AddBalance handleAddBalance={handleAddBalance} />
       </Balance>
+      <Transfer>
+        <TransferBalance userData={userData} />
+      </Transfer>
     </>
   );
 };
