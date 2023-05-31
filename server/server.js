@@ -128,6 +128,222 @@ app.post("/api/balance", (req, res) => {
   });
 });
 
+////////////////////////// Transfer balance
+app.post("/api/transfer", (req, res) => {
+  const { userId, toAccount, amount } = req.body;
+
+  // Retrieve the current balance and transaction number of the logged user
+  const getLoggedUserQuery =
+    "SELECT balance, transaction_number, username FROM users WHERE id = ?";
+  const getLoggedUserValues = [userId];
+
+  connection.query(
+    getLoggedUserQuery,
+    getLoggedUserValues,
+    (error, results) => {
+      if (error) {
+        console.error("Error fetching logged user data: ", error);
+        res.status(500).json({ error: "Error fetching logged user data" });
+        return;
+      }
+
+      if (results.length === 0) {
+        res.status(404).json({ error: "Logged user not found" });
+        return;
+      }
+
+      const { balance, transaction_number, username } = results[0];
+      const transferAmount = parseFloat(amount);
+
+      if (isNaN(transferAmount) || transferAmount <= 0) {
+        res.status(400).json({ error: "Invalid transfer amount" });
+        return;
+      }
+
+      // Check if the logged user has sufficient balance for the transfer
+      if (parseFloat(balance) < transferAmount) {
+        res.status(400).json({ error: "Insufficient balance for transfer" });
+        return;
+      }
+
+      // Retrieve the balance and transaction number of the recipient user
+      const getRecipientUserQuery =
+        "SELECT balance, transaction_number FROM users WHERE id = ?";
+      const getRecipientUserValues = [toAccount];
+
+      connection.query(
+        getRecipientUserQuery,
+        getRecipientUserValues,
+        (error, recipientResults) => {
+          if (error) {
+            console.error("Error fetching recipient user data: ", error);
+            res
+              .status(500)
+              .json({ error: "Error fetching recipient user data" });
+            return;
+          }
+
+          if (recipientResults.length === 0) {
+            res.status(404).json({ error: "Recipient user not found" });
+            return;
+          }
+
+          const recipientBalance = parseFloat(recipientResults[0].balance);
+          const recipientTransactionNumber =
+            recipientResults[0].transaction_number;
+
+          // Update the balances of the logged user and the recipient user
+          const loggedUserNewBalance = parseFloat(balance) - transferAmount;
+          const recipientNewBalance = recipientBalance + transferAmount;
+
+          // Update the balance and transaction number of the logged user
+          const updateLoggedUserQuery =
+            "UPDATE users SET balance = ?, transaction_number = ? WHERE id = ?";
+          const updateLoggedUserValues = [
+            loggedUserNewBalance.toFixed(2),
+            transaction_number + 1,
+            userId,
+          ];
+
+          // Update the balance and transaction number of the recipient user
+          const updateRecipientUserQuery =
+            "UPDATE users SET balance = ?, transaction_number = ? WHERE id = ?";
+          const updateRecipientUserValues = [
+            recipientNewBalance.toFixed(2),
+            recipientTransactionNumber + 1,
+            toAccount,
+          ];
+
+          // Create a new transaction entry for the logged user
+          const createLoggedUserTransactionQuery =
+            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
+          const createLoggedUserTransactionValues = [
+            userId,
+            username,
+            transferAmount,
+            "-",
+          ];
+
+          // Create a new transaction entry for the recipient user
+          const createRecipientUserTransactionQuery =
+            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
+          const createRecipientUserTransactionValues = [
+            toAccount,
+            username,
+            transferAmount,
+            "+",
+          ];
+
+          connection.beginTransaction((error) => {
+            if (error) {
+              console.error("Error starting transaction: ", error);
+              res.status(500).json({ error: "Error starting transaction" });
+              return;
+            }
+
+            // Perform the transfer and transaction creation queries within a transaction
+            connection.query(
+              updateLoggedUserQuery,
+              updateLoggedUserValues,
+              (error) => {
+                if (error) {
+                  connection.rollback(() => {
+                    console.error("Error updating logged user: ", error);
+                    res
+                      .status(500)
+                      .json({ error: "Error updating logged user" });
+                  });
+                  return;
+                }
+
+                connection.query(
+                  updateRecipientUserQuery,
+                  updateRecipientUserValues,
+                  (error) => {
+                    if (error) {
+                      connection.rollback(() => {
+                        console.error("Error updating recipient user: ", error);
+                        res
+                          .status(500)
+                          .json({ error: "Error updating recipient user" });
+                      });
+                      return;
+                    }
+
+                    connection.query(
+                      createLoggedUserTransactionQuery,
+                      createLoggedUserTransactionValues,
+                      (error) => {
+                        if (error) {
+                          connection.rollback(() => {
+                            console.error(
+                              "Error creating logged user transaction: ",
+                              error
+                            );
+                            res
+                              .status(500)
+                              .json({
+                                error: "Error creating logged user transaction",
+                              });
+                          });
+                          return;
+                        }
+
+                        connection.query(
+                          createRecipientUserTransactionQuery,
+                          createRecipientUserTransactionValues,
+                          (error) => {
+                            if (error) {
+                              connection.rollback(() => {
+                                console.error(
+                                  "Error creating recipient user transaction: ",
+                                  error
+                                );
+                                res
+                                  .status(500)
+                                  .json({
+                                    error:
+                                      "Error creating recipient user transaction",
+                                  });
+                              });
+                              return;
+                            }
+
+                            connection.commit((error) => {
+                              if (error) {
+                                connection.rollback(() => {
+                                  console.error(
+                                    "Error committing transaction: ",
+                                    error
+                                  );
+                                  res
+                                    .status(500)
+                                    .json({
+                                      error: "Error committing transaction",
+                                    });
+                                });
+                                return;
+                              }
+
+                              res
+                                .status(200)
+                                .json({ message: "Transfer successful" });
+                            });
+                          }
+                        );
+                      }
+                    );
+                  }
+                );
+              }
+            );
+          });
+        }
+      );
+    }
+  );
+});
+
 //////////////////////// login
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
