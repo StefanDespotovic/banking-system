@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 
 const TransferBalance = ({ userData }) => {
+  const storedFromAccount = localStorage.getItem("fromAccount");
   const [fromAccount, setFromAccount] = useState(
-    `${userData.username} ${userData.transaction_number}`
+    storedFromAccount || `${userData.username} ${userData.transaction_number}`
   );
   const [toAccount, setToAccount] = useState("");
   const [amount, setAmount] = useState("");
@@ -35,19 +36,25 @@ const TransferBalance = ({ userData }) => {
         console.error("Transfer failed");
         // Handle transfer failure
       }
+      localStorage.removeItem("fromAccount");
     } catch (error) {
       console.error("Error connecting to server", error);
-      // Handle connection error
     }
 
-    setFromAccount("");
     setToAccount("");
     setAmount("");
   };
 
   useEffect(() => {
+    if (!storedFromAccount) {
+      setFromAccount(`${userData.username} ${userData.transaction_number}`);
+      localStorage.setItem(
+        "fromAccount",
+        `${userData.username} ${userData.transaction_number}`
+      );
+    }
     fetchUserList();
-  }, []);
+  }, [userData]);
 
   const fetchUserList = async () => {
     try {

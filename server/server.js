@@ -39,7 +39,7 @@ app.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
 
   const query =
-    "SELECT balance, transaction_number, username FROM users WHERE id = ?";
+    "SELECT balance, transaction_number, username, id FROM users WHERE id = ?";
   const values = [userId];
 
   connection.query(query, values, (error, results) => {
@@ -280,11 +280,9 @@ app.post("/api/transfer", (req, res) => {
                               "Error creating logged user transaction: ",
                               error
                             );
-                            res
-                              .status(500)
-                              .json({
-                                error: "Error creating logged user transaction",
-                              });
+                            res.status(500).json({
+                              error: "Error creating logged user transaction",
+                            });
                           });
                           return;
                         }
@@ -299,12 +297,10 @@ app.post("/api/transfer", (req, res) => {
                                   "Error creating recipient user transaction: ",
                                   error
                                 );
-                                res
-                                  .status(500)
-                                  .json({
-                                    error:
-                                      "Error creating recipient user transaction",
-                                  });
+                                res.status(500).json({
+                                  error:
+                                    "Error creating recipient user transaction",
+                                });
                               });
                               return;
                             }
@@ -316,11 +312,9 @@ app.post("/api/transfer", (req, res) => {
                                     "Error committing transaction: ",
                                     error
                                   );
-                                  res
-                                    .status(500)
-                                    .json({
-                                      error: "Error committing transaction",
-                                    });
+                                  res.status(500).json({
+                                    error: "Error committing transaction",
+                                  });
                                 });
                                 return;
                               }
