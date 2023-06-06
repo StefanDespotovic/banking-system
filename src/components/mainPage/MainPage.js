@@ -36,6 +36,7 @@ const Main = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [triggerFetch, setTriggerFetch] = useState(false);
 
   const fetchUserData = async () => {
     try {
@@ -78,7 +79,7 @@ const Main = () => {
       fetchUserData();
       fetchTransactionsData();
     }, // eslint-disable-next-line
-    [userId]
+    [userId, triggerFetch]
   );
 
   const handleAddBalance = async (value, seller_sender_name) => {
@@ -145,7 +146,10 @@ const Main = () => {
         <AddBalance handleAddBalance={handleAddBalance} />
       </Balance>
       <Transfer>
-        <TransferBalance userData={userData} />
+        <TransferBalance
+          userData={userData}
+          setTriggerFetch={setTriggerFetch}
+        />
       </Transfer>
     </>
   );

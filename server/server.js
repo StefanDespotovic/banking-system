@@ -168,7 +168,7 @@ app.post("/api/transfer", (req, res) => {
 
       // Retrieve the balance and transaction number of the recipient user
       const getRecipientUserQuery =
-        "SELECT balance, transaction_number FROM users WHERE id = ?";
+        "SELECT balance, transaction_number, id FROM users WHERE id = ?";
       const getRecipientUserValues = [toAccount];
 
       connection.query(
@@ -196,21 +196,21 @@ app.post("/api/transfer", (req, res) => {
           const loggedUserNewBalance = parseFloat(balance) - transferAmount;
           const recipientNewBalance = recipientBalance + transferAmount;
 
-          // Update the balance and transaction number of the logged user
+          // Update the balance of the logged user
           const updateLoggedUserQuery =
-            "UPDATE users SET balance = ?, transaction_number = ? WHERE id = ?";
+            "UPDATE users SET balance = ? WHERE id = ?";
           const updateLoggedUserValues = [
             loggedUserNewBalance.toFixed(2),
-            transaction_number + 1,
+
             userId,
           ];
 
-          // Update the balance and transaction number of the recipient user
+          // Update the balance of the recipient user
           const updateRecipientUserQuery =
-            "UPDATE users SET balance = ?, transaction_number = ? WHERE id = ?";
+            "UPDATE users SET balance = ?WHERE id = ?";
           const updateRecipientUserValues = [
             recipientNewBalance.toFixed(2),
-            recipientTransactionNumber + 1,
+
             toAccount,
           ];
 
