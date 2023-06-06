@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const TransferBalance = ({ userData }) => {
-  const storedFromAccount = localStorage.getItem("fromAccount");
-  const [fromAccount, setFromAccount] = useState(
-    storedFromAccount || `${userData.username} ${userData.transaction_number}`
-  );
+  const [fromAccount, setFromAccount] = useState("");
   const [toAccount, setToAccount] = useState("");
   const [amount, setAmount] = useState("");
   const [userList, setUserList] = useState([]);
@@ -46,11 +43,9 @@ const TransferBalance = ({ userData }) => {
   };
 
   useEffect(() => {
-    if (!storedFromAccount) {
-      setFromAccount(`${userData.username} ${userData.transaction_number}`);
-      localStorage.setItem(
-        "fromAccount",
-        `${userData.username} ${userData.transaction_number}`
+    if (userData) {
+      setFromAccount(
+        `${userData.username} ${userData.transaction_number} ${userData.id}`
       );
     }
     fetchUserList();
@@ -96,9 +91,9 @@ const TransferBalance = ({ userData }) => {
           {userList.map((user) => (
             <option
               key={user.id}
-              value={`${user.username} ${user.transaction_number}`}
+              value={`${user.username} ${user.transaction_number} ${user.id}`}
             >
-              {`${user.username} (${user.transaction_number})`}
+              {`${user.username} (${user.transaction_number}) ${user.id}`}
             </option>
           ))}
         </select>

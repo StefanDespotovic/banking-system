@@ -43,14 +43,13 @@ const Main = () => {
       if (response.ok) {
         const data = await response.json();
         setUserData(data);
-        setLoading(false);
       } else {
         setError("Error fetching user data");
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error connecting to server", error);
       setError("Error connecting to server");
+    } finally {
       setLoading(false);
     }
   };
@@ -62,15 +61,14 @@ const Main = () => {
       );
       if (response.ok) {
         const transactions = await response.json();
-        console.log("Transactions data: ", transactions);
         setTransactions(transactions);
       } else {
         setError("Error fetching transactions data");
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error connecting to server", error);
       setError("Error connecting to server");
+    } finally {
       setLoading(false);
     }
   };
@@ -84,10 +82,14 @@ const Main = () => {
   );
 
   const handleAddBalance = async (value, seller_sender_name) => {
-    const numericValue = parseFloat(value).toFixed(2); // Convert the value to a string with 2 decimal places
+    setLoading(true); // Set loading state to true before making the request
+
+    const numericValue = parseFloat(value).toFixed(2);
+
     try {
       if (!seller_sender_name) {
         setError("Seller/Sender Name is required.");
+        setLoading(false); // Set loading state to false when an error occurs
         return;
       }
 
@@ -98,21 +100,23 @@ const Main = () => {
         },
         body: JSON.stringify({
           userId,
-          value: numericValue, // Use the parsed numeric value
+          value: numericValue,
           seller_sender_name,
         }),
       });
 
       if (response.ok) {
-        // Refresh user data and transaction history
-        fetchUserData();
+        fetchUserData(); // Refresh user data and transaction history
         fetchTransactionsData();
       } else {
-        setError("Error adding balance");
+        const data = await response.json();
+        setError("Error adding balance: " + data.error);
       }
     } catch (error) {
       console.error("Error connecting to server", error);
       setError("Error connecting to server");
+    } finally {
+      setLoading(false); // Set loading state to false after the request is complete
     }
   };
 

@@ -80,6 +80,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null);
 
     try {
       const response = await fetch("http://localhost:5000/api/login", {
@@ -95,7 +96,7 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-        handleLogin(data.userId, username, password); // Update the function call here
+        handleLogin(data.userId);
         navigate("/main");
       } else {
         const data = await response.json();
@@ -103,6 +104,7 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error connecting to server", error);
+      setError("Error connecting to server. Please try again.");
     }
   };
 
