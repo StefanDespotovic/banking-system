@@ -3,6 +3,7 @@ import CreditCard from "../creditCard/CreditCard";
 import Transactions from "../transactions/Transactions";
 import AddBalance from "../addBalance/AddBalance";
 import TransferBalance from "../transferBalance/TransferBalance";
+import LineGraph from "../lineGraph/LineGraph";
 import { AuthContext } from "../../AuthContext";
 import styled from "styled-components";
 
@@ -151,6 +152,9 @@ const Main = () => {
           setTriggerFetch={setTriggerFetch}
         />
       </Transfer>
+      <div>
+        <LineGraph></LineGraph>
+      </div>
     </>
   );
 };
