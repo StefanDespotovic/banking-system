@@ -1,13 +1,73 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
+const TransferBalanceCard = styled.div`
+  background: radial-gradient(
+    circle at 24.1% 68.8%,
+    rgb(50, 50, 50) 0%,
+    rgb(0, 0, 0) 99.4%
+  );
+  color: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  width: 300px;
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 8px;
+    }
+
+    input,
+    select {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 16px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: rgb(0, 123, 255);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    p {
+      color: red;
+      margin-top: 8px;
+    }
+  }
+`;
 const TransferBalance = ({ userData, setTriggerFetch }) => {
   const [fromAccount, setFromAccount] = useState("");
   const [toAccount, setToAccount] = useState("");
   const [amount, setAmount] = useState("");
   const [userList, setUserList] = useState([]);
   const [transferError, setTransferError] = useState("");
+  const [transferSuccess, setTransferSuccess] = useState(false); // New state variable
 
   const handleTransfer = async () => {
+    setTransferSuccess(false);
+    setTransferError("");
     console.log("Transfer initiated!");
     console.log("From Account:", fromAccount);
     console.log("To Account:", toAccount);
@@ -38,7 +98,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
         console.log("Transfer successful");
 
         setTriggerFetch((prev) => !prev);
-
+        setTransferSuccess(true);
         // Perform any additional actions after successful transfer
       } else {
         console.error("Transfer failed");
@@ -82,7 +142,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
   };
 
   return (
-    <div>
+    <TransferBalanceCard>
       <h2>Transfer Balance</h2>
       <form>
         <label htmlFor="fromAccount">From Account:</label>
@@ -126,8 +186,11 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
           Transfer
         </button>
         {transferError && <p>{transferError}</p>}
+        {transferSuccess && (
+          <p style={{ color: "green" }}>Transfer successful!</p>
+        )}
       </form>
-    </div>
+    </TransferBalanceCard>
   );
 };
 
