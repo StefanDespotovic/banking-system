@@ -153,7 +153,7 @@ const Main = () => {
         />
       </Transfer>
       <div>
-        <LineGraph></LineGraph>
+        <LineGraph userData={userData} />
       </div>
     </>
   );

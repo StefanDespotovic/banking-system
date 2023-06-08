@@ -90,6 +90,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
           userId: userData.id,
           toAccount: selectedUserId,
           amount: transferAmount,
+          value: transferAmount,
         }),
       });
 
@@ -106,7 +107,6 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
         setTransferError(errorData.error);
         // Handle transfer failure
       }
-      localStorage.removeItem("fromAccount");
     } catch (error) {
       console.error("Error connecting to server", error);
     }

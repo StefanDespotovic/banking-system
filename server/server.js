@@ -68,7 +68,14 @@ app.get("/api/transactions", (req, res) => {
       res.status(500).json({ error: "Error fetching transactions" });
       return;
     }
-    res.json(results);
+
+    const formattedResults = results.map((result) => {
+      const date = new Date(result.date);
+      const formattedDate = date.toISOString().split("T")[0];
+      return { ...result, date: formattedDate };
+    });
+
+    res.json(formattedResults);
   });
 });
 
@@ -76,61 +83,64 @@ app.get("/api/transactions", (req, res) => {
 app.post("/api/balance", (req, res) => {
   const { userId, seller_sender_name, value } = req.body;
 
-  // Retrieve the current balance and transaction number for the user
-  const getBalanceQuery = "SELECT balance FROM users WHERE id = ?";
-  const getBalanceValues = [userId];
+  // Create a new transaction entry
+  const createTransactionQuery =
+    "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time, current_balance) VALUES (?, ?, ?, ?, CURDATE(), CURTIME(),  (SELECT balance + ? FROM users WHERE id = ?))";
+  const createTransactionValues = [
+    userId,
+    seller_sender_name,
+    value,
+    "+",
+    value,
+    userId,
+  ];
 
-  connection.query(getBalanceQuery, getBalanceValues, (error, results) => {
+  connection.query(createTransactionQuery, createTransactionValues, (error) => {
     if (error) {
-      console.error("Error fetching user balance: ", error);
-      res.status(500).json({ error: "Error fetching user balance" });
+      console.error("Error creating transaction: ", error);
+      res.status(500).json({ error: "Error creating transaction" });
       return;
     }
 
-    if (results.length === 0) {
-      res.status(404).json({ error: "User not found" });
-      return;
-    }
+    // Retrieve the current balance for the user
+    const getBalanceQuery = "SELECT balance FROM users WHERE id = ?";
+    const getBalanceValues = [userId];
 
-    const { balance } = results[0];
-    const newBalance = parseFloat(balance) + parseFloat(value);
-
-    // Update the balance of the user
-    const updateBalanceQuery = "UPDATE users SET balance = ? WHERE id = ?";
-    const updateBalanceValues = [newBalance.toFixed(2), userId]; // Format the new balance value with two decimal places
-
-    connection.query(updateBalanceQuery, updateBalanceValues, (error) => {
+    connection.query(getBalanceQuery, getBalanceValues, (error, results) => {
       if (error) {
-        console.error("Error updating user balance: ", error);
-        res.status(500).json({ error: "Error updating user balance" });
-      } else {
+        console.error("Error fetching user balance: ", error);
+        res.status(500).json({ error: "Error fetching user balance" });
+        return;
       }
 
-      // Create a new transaction entry
-      const createTransactionQuery =
-        "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
-      const createTransactionValues = [userId, seller_sender_name, value, "+"];
+      if (results.length === 0) {
+        res.status(404).json({ error: "User not found" });
+        return;
+      }
 
-      connection.query(
-        createTransactionQuery,
-        createTransactionValues,
-        (error) => {
-          if (error) {
-            console.error("Error creating transaction: ", error);
-            res.status(500).json({ error: "Error creating transaction" });
-            return;
-          }
+      const { balance } = results[0];
+      const newBalance = parseFloat(balance) + parseFloat(value);
+
+      // Update the balance of the user
+      const updateBalanceQuery = "UPDATE users SET balance = ? WHERE id = ?";
+      const updateBalanceValues = [newBalance.toFixed(2), userId]; // Format the new balance value with two decimal places
+
+      connection.query(updateBalanceQuery, updateBalanceValues, (error) => {
+        if (error) {
+          console.error("Error updating user balance: ", error);
+          res.status(500).json({ error: "Error updating user balance" });
+        } else {
           // Return success response
           res.json({ message: "Balance added successfully" });
         }
-      );
+      });
     });
   });
 });
 
 ////////////////////////// Transfer balance
 app.post("/api/transfer", (req, res) => {
-  const { userId, toAccount, amount } = req.body;
+  const { userId, toAccount, amount, value } = req.body;
 
   // Retrieve the current balance and transaction number of the logged user
   const getLoggedUserQuery =
@@ -192,46 +202,28 @@ app.post("/api/transfer", (req, res) => {
           const recipientTransactionNumber =
             recipientResults[0].transaction_number;
 
-          // Update the balances of the logged user and the recipient user
-          const loggedUserNewBalance = parseFloat(balance) - transferAmount;
-          const recipientNewBalance = recipientBalance + transferAmount;
-
-          // Update the balance of the logged user
-          const updateLoggedUserQuery =
-            "UPDATE users SET balance = ? WHERE id = ?";
-          const updateLoggedUserValues = [
-            loggedUserNewBalance.toFixed(2),
-
-            userId,
-          ];
-
-          // Update the balance of the recipient user
-          const updateRecipientUserQuery =
-            "UPDATE users SET balance = ?WHERE id = ?";
-          const updateRecipientUserValues = [
-            recipientNewBalance.toFixed(2),
-
-            toAccount,
-          ];
-
           // Create a new transaction entry for the logged user
           const createLoggedUserTransactionQuery =
-            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
+            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time, current_balance) VALUES (?, ?, ?, ?, CURDATE(), CURTIME(),  (SELECT balance - ? FROM users WHERE id = ?))";
           const createLoggedUserTransactionValues = [
             userId,
             username,
             transferAmount,
             "-",
+            value,
+            userId,
           ];
 
           // Create a new transaction entry for the recipient user
           const createRecipientUserTransactionQuery =
-            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time) VALUES (?, ?, ?, ?, CURDATE(), CURTIME())";
+            "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time, current_balance) VALUES (?, ?, ?, ?, CURDATE(), CURTIME(),  (SELECT balance + ? FROM users WHERE id = ?))";
           const createRecipientUserTransactionValues = [
             toAccount,
             username,
             transferAmount,
             "+",
+            value,
+            toAccount,
           ];
 
           connection.beginTransaction((error) => {
@@ -241,66 +233,95 @@ app.post("/api/transfer", (req, res) => {
               return;
             }
 
-            // Perform the transfer and transaction creation queries within a transaction
+            // Perform the transaction creation queries within a transaction
             connection.query(
-              updateLoggedUserQuery,
-              updateLoggedUserValues,
+              createLoggedUserTransactionQuery,
+              createLoggedUserTransactionValues,
               (error) => {
                 if (error) {
                   connection.rollback(() => {
-                    console.error("Error updating logged user: ", error);
-                    res
-                      .status(500)
-                      .json({ error: "Error updating logged user" });
+                    console.error(
+                      "Error creating logged user transaction: ",
+                      error
+                    );
+                    res.status(500).json({
+                      error: "Error creating logged user transaction",
+                    });
                   });
                   return;
                 }
 
                 connection.query(
-                  updateRecipientUserQuery,
-                  updateRecipientUserValues,
+                  createRecipientUserTransactionQuery,
+                  createRecipientUserTransactionValues,
                   (error) => {
                     if (error) {
                       connection.rollback(() => {
-                        console.error("Error updating recipient user: ", error);
-                        res
-                          .status(500)
-                          .json({ error: "Error updating recipient user" });
+                        console.error(
+                          "Error creating recipient user transaction: ",
+                          error
+                        );
+                        res.status(500).json({
+                          error: "Error creating recipient user transaction",
+                        });
                       });
                       return;
                     }
 
+                    // Update the balances of the logged user and the recipient user
+                    const loggedUserNewBalance =
+                      parseFloat(balance) - transferAmount;
+                    const recipientNewBalance =
+                      recipientBalance + transferAmount;
+
+                    // Update the balance of the logged user
+                    const updateLoggedUserQuery =
+                      "UPDATE users SET balance = ? WHERE id = ?";
+                    const updateLoggedUserValues = [
+                      loggedUserNewBalance.toFixed(2),
+                      userId,
+                    ];
+
+                    // Update the balance of the recipient user
+                    const updateRecipientUserQuery =
+                      "UPDATE users SET balance = ?WHERE id = ?";
+                    const updateRecipientUserValues = [
+                      recipientNewBalance.toFixed(2),
+                      toAccount,
+                    ];
+
                     connection.query(
-                      createLoggedUserTransactionQuery,
-                      createLoggedUserTransactionValues,
+                      updateLoggedUserQuery,
+                      updateLoggedUserValues,
                       (error) => {
                         if (error) {
                           connection.rollback(() => {
                             console.error(
-                              "Error creating logged user transaction: ",
+                              "Error updating logged user: ",
                               error
                             );
-                            res.status(500).json({
-                              error: "Error creating logged user transaction",
-                            });
+                            res
+                              .status(500)
+                              .json({ error: "Error updating logged user" });
                           });
                           return;
                         }
 
                         connection.query(
-                          createRecipientUserTransactionQuery,
-                          createRecipientUserTransactionValues,
+                          updateRecipientUserQuery,
+                          updateRecipientUserValues,
                           (error) => {
                             if (error) {
                               connection.rollback(() => {
                                 console.error(
-                                  "Error creating recipient user transaction: ",
+                                  "Error updating recipient user: ",
                                   error
                                 );
-                                res.status(500).json({
-                                  error:
-                                    "Error creating recipient user transaction",
-                                });
+                                res
+                                  .status(500)
+                                  .json({
+                                    error: "Error updating recipient user",
+                                  });
                               });
                               return;
                             }
