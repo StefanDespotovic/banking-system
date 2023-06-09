@@ -5,6 +5,8 @@ import AddBalance from "../addBalance/AddBalance";
 import TransferBalance from "../transferBalance/TransferBalance";
 import LineGraph from "../lineGraph/LineGraph";
 import { AuthContext } from "../../AuthContext";
+import { useNavigate } from "react-router-dom";
+
 import styled from "styled-components";
 
 const Card = styled.div`
@@ -31,6 +33,11 @@ const Transfer = styled.div`
   margin-left: 30vw;
   bottom: 32vh;
 `;
+const LineGraphicon = styled.div`
+  position: relative;
+  margin-left: 40vw;
+  bottom: 83vh;
+`;
 const Main = () => {
   const { userId } = useContext(AuthContext);
   const [userData, setUserData] = useState({});
@@ -38,6 +45,13 @@ const Main = () => {
   const [error, setError] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [triggerFetch, setTriggerFetch] = useState(false);
+  const { handleLogout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const handleLogoutClick = () => {
+    handleLogout();
+    navigate("/login");
+  };
 
   const fetchUserData = async () => {
     try {
@@ -152,9 +166,10 @@ const Main = () => {
           setTriggerFetch={setTriggerFetch}
         />
       </Transfer>
-      <div>
+      <LineGraphicon>
         <LineGraph userData={userData} />
-      </div>
+      </LineGraphicon>
+      <button onClick={handleLogoutClick}>Logout</button>
     </>
   );
 };
