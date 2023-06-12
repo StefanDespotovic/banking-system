@@ -50,7 +50,7 @@ const Main = () => {
   const navigate = useNavigate();
   const handleLogoutClick = () => {
     handleLogout();
-    navigate("/login");
+    navigate("/");
   };
 
   const fetchUserData = async () => {

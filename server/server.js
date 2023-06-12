@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
+const crypto = require("crypto");
 
 const app = express();
 
@@ -20,6 +21,47 @@ connection.connect((error) => {
 });
 
 app.use(bodyParser.json());
+
+//////////////// for registration new users
+app.post("/api/register", (req, res) => {
+  const { username, password } = req.body;
+  const transactionNumber = Math.floor(
+    1000000000000 + Math.random() * 9000000000000
+  ).toString();
+
+  const createUserQuery =
+    "INSERT INTO users (username, password, transaction_number, balance) VALUES (?, ?, ?, ?)";
+  const createUserValues = [username, password, transactionNumber, 50];
+
+  connection.query(createUserQuery, createUserValues, (error, results) => {
+    if (error) {
+      console.error("Error creating user: ", error);
+      res.status(500).json({ error: "Error creating user" });
+      return;
+    }
+
+    const userId = results.insertId;
+
+    // Create a new transaction entry for the new user
+    const createTransactionQuery =
+      "INSERT INTO transactions (user_id, seller_sender_name, value, sign, date, time, current_balance) VALUES (?, ?, ?, ?, CURDATE(), CURTIME(), ?)";
+    const createTransactionValues = [userId, "Bonus", 50, "+", 50];
+
+    connection.query(
+      createTransactionQuery,
+      createTransactionValues,
+      (error) => {
+        if (error) {
+          console.error("Error creating transaction: ", error);
+          res.status(500).json({ error: "Error creating transaction" });
+          return;
+        }
+
+        res.json({ userId });
+      }
+    );
+  });
+});
 
 //////////////// for testing fetching all users
 app.get("/api/users", (req, res) => {
@@ -317,11 +359,9 @@ app.post("/api/transfer", (req, res) => {
                                   "Error updating recipient user: ",
                                   error
                                 );
-                                res
-                                  .status(500)
-                                  .json({
-                                    error: "Error updating recipient user",
-                                  });
+                                res.status(500).json({
+                                  error: "Error updating recipient user",
+                                });
                               });
                               return;
                             }

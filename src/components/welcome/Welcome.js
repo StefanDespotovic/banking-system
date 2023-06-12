@@ -41,6 +41,21 @@ const LoginButton = styled.button`
     background-color: #0069d9;
   }
 `;
+const RegisterButton = styled.button`
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 16px;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: #0069d9;
+  }
+`;
 
 const Welcome = () => {
   const navigate = useNavigate();
@@ -49,10 +64,15 @@ const Welcome = () => {
     navigate("/login");
   };
 
+  const handleRegisterClick = () => {
+    navigate("/Register");
+  };
+
   return (
     <WelcomeLogin>
       <Title>Welcome</Title>
       <LoginButton onClick={handleLoginClick}>Login</LoginButton>
+      <RegisterButton onClick={handleRegisterClick}>Register</RegisterButton>
     </WelcomeLogin>
   );
 };
