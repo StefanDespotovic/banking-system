@@ -117,9 +117,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
 
   useEffect(() => {
     if (userData) {
-      setFromAccount(
-        `${userData.username} ${userData.transaction_number} ${userData.id}`
-      );
+      setFromAccount(`${userData.username} ${userData.transaction_number} `);
     }
     fetchUserList();
   }, [userData]);
@@ -169,7 +167,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
               key={user.id}
               value={`${user.username} ${user.transaction_number} ${user.id}`}
             >
-              {`${user.username} (${user.transaction_number}) ${user.id}`}
+              {`${user.username} ${user.transaction_number}`}
             </option>
           ))}
         </select>

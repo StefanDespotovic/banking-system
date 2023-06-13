@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledLineGraphIcon = styled.div`
@@ -18,25 +18,55 @@ const StyledLineGraphIcon = styled.div`
   align-items: center;
   height: 25vw;
 `;
+const Tooltip = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  pointer-events: none;
+`;
 
 const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
   const minValue = 0;
   const maxValue = Math.max(...yAxisLabels);
+  const chartWidth = 500;
   const chartHeight = 300;
   const labelCount = yAxisLabels.length;
+
+  const labelWidth = chartWidth / (chartData.length || 1);
+
+  const [tooltip, setTooltip] = useState("");
+
+  const handleCircleHover = (data) => {
+    setTooltip(`Transaction: ${data.value} USD`);
+  };
+
+  const handleCircleLeave = () => {
+    setTooltip("");
+  };
 
   return (
     <StyledLineGraphIcon>
       <svg width="100%" height="100%" viewBox="-25 0 550 400">
-        {/* Render the lines and circles for each data point */}
         {chartData.map((data, index) => {
-          const x = (index * 500) / (chartData.length - 1);
-          const y =
-            chartHeight -
-            ((data.value - minValue) / (maxValue - minValue)) * chartHeight;
+          const x = index * labelWidth + labelWidth / 2;
+          let y;
+          if (chartData.length < 3 && index === 0) {
+            y = chartHeight;
+          } else {
+            y =
+              chartHeight -
+              ((data.value - minValue) / (maxValue - minValue)) * chartHeight;
+          }
           const nextData = chartData[index + 1];
           const nextX = nextData
-            ? ((index + 1) * 500) / (chartData.length - 1)
+            ? (index + 1) * labelWidth + labelWidth / 2
             : x;
           const nextY = nextData
             ? chartHeight -
@@ -47,19 +77,22 @@ const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
             <g key={index}>
               <line
                 x1={x}
-                y1={y}
+                y1={y + 20}
                 x2={nextX}
-                y2={nextY}
+                y2={nextY + 20}
                 stroke={lineColor}
                 strokeWidth={2}
               />
               <circle
                 cx={x}
-                cy={y}
+                cy={y + 20}
                 r={4}
                 fill="#FFFFFF"
                 stroke={lineColor}
                 strokeWidth={1}
+                onMouseEnter={() => handleCircleHover(data)}
+                onMouseLeave={handleCircleLeave}
+                style={{ cursor: "pointer" }}
               />
             </g>
           );
@@ -68,8 +101,8 @@ const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
         {yAxisLabels.map((label, index) => (
           <text
             key={index}
-            x={20}
-            y={(index / (labelCount - 1)) * chartHeight + 20}
+            x={10}
+            y={(index / (labelCount - 1)) * chartHeight + 25}
             fontSize={12}
             textAnchor="end"
             dominantBaseline="middle"
@@ -80,11 +113,11 @@ const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
         ))}
         {/* Render the x-axis labels */}
         {chartData.map((data, index) => {
-          const x = (index * 500) / (chartData.length - 1);
+          const x = index * labelWidth;
           return (
             <text
               key={index}
-              x={x}
+              x={x + labelWidth / 2}
               y={chartHeight + 80}
               fontSize={12}
               textAnchor="middle"
@@ -96,6 +129,7 @@ const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
           );
         })}
       </svg>
+      {tooltip && <Tooltip>{tooltip}</Tooltip>}
     </StyledLineGraphIcon>
   );
 };
