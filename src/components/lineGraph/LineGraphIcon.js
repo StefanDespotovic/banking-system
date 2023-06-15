@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 const StyledLineGraphIcon = styled.div`
+  position: relative;
   background: radial-gradient(
     circle at 24.1% 68.8%,
     rgb(50, 50, 50) 0%,
@@ -10,9 +11,6 @@ const StyledLineGraphIcon = styled.div`
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
-  position: absolute;
-  top: 50%;
-  left: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;

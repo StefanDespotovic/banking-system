@@ -67,6 +67,27 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
+const BackButton = styled.button`
+  position: absolute;
+  top: 1vh;
+  left: 1vw;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0069d9;
+  }
+
+  @media (max-width: 768px) {
+    position: static;
+    margin-top: 5vh;
+  }
+`;
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -117,45 +138,51 @@ const Register = () => {
       setError("Error connecting to server. Please try again.");
     }
   };
+  const handleBack = () => {
+    navigate("/");
+  };
   return (
-    <RegisterModal>
-      <Form onSubmit={handleSubmit}>
-        {error && <span>{error.message}</span>}
-        <Label>
-          <span>Username:</span>
-          <input
-            type="text"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-            minLength={6}
-            required
-          />
-        </Label>
-        <Label>
-          <span>Password:</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            minLength={6}
-            required
-          />
-        </Label>
-        <Label>
-          <span>Reenter Password:</span>
-          <input
-            type="password"
-            value={reenterPassword}
-            onChange={(event) => setReenterPassword(event.target.value)}
-            required
-          />
-        </Label>
-        {password !== reenterPassword && (
-          <span style={{ color: "white" }}>Passwords do not match.</span>
-        )}
-        <Button type="submit">Register</Button>
-      </Form>
-    </RegisterModal>
+    <>
+      <RegisterModal>
+        <Form onSubmit={handleSubmit}>
+          {error && <span>{error.message}</span>}
+          <Label>
+            <span>Username:</span>
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+              minLength={6}
+              required
+            />
+          </Label>
+          <Label>
+            <span>Password:</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+              minLength={6}
+              required
+            />
+          </Label>
+          <Label>
+            <span>Reenter Password:</span>
+            <input
+              type="password"
+              value={reenterPassword}
+              onChange={(event) => setReenterPassword(event.target.value)}
+              required
+            />
+          </Label>
+          {password !== reenterPassword && (
+            <span style={{ color: "white" }}>Passwords do not match.</span>
+          )}
+          <Button type="submit">Register</Button>
+        </Form>
+      </RegisterModal>
+      <BackButton onClick={handleBack}>Return</BackButton>
+    </>
   );
 };
 

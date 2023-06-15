@@ -1,6 +1,5 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ErrorMessage } from "@hookform/error-message";
 import { AuthContext } from "../../AuthContext";
 
 import styled from "styled-components";
@@ -69,10 +68,35 @@ const Button = styled.button`
     background-color: #0069d9;
   }
 `;
+const Error = styled.div`
+  color: red;
+  margin-top: 8px;
+`;
+const BackButton = styled.button`
+  position: absolute;
+  top: 1vh;
+  left: 1vw;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0069d9;
+  }
+
+  @media (max-width: 768px) {
+    position: static;
+    margin-top: 5vh;
+  }
+`;
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+  const [loginError, setLoginError] = useState("");
 
   const { handleLogin } = useContext(AuthContext);
 
@@ -80,7 +104,7 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setError(null);
+    setLoginError("");
 
     try {
       const response = await fetch("http://localhost:5000/api/login", {
@@ -100,37 +124,42 @@ const Login = () => {
         navigate("/main");
       } else {
         const data = await response.json();
-        setError(data.error);
+        setLoginError(data.error);
       }
     } catch (error) {
       console.error("Error connecting to server", error);
-      setError("Error connecting to server. Please try again.");
+      setLoginError("Error connecting to server. Please try again.");
     }
   };
-
+  const handleBack = () => {
+    navigate("/");
+  };
   return (
-    <LoginModal>
-      <Form onSubmit={handleSubmit}>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        <Label>
-          <span>Username:</span>
-          <input
-            type="text"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </Label>
-        <Label>
-          <span>Password:</span>
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </Label>
-        <Button type="submit">Login</Button>
-      </Form>
-    </LoginModal>
+    <>
+      <LoginModal>
+        <Form onSubmit={handleSubmit}>
+          {loginError && <Error>{loginError}</Error>}
+          <Label>
+            <span>Username:</span>
+            <input
+              type="text"
+              value={username}
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </Label>
+          <Label>
+            <span>Password:</span>
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+          </Label>
+          <Button type="submit">Login</Button>
+        </Form>
+      </LoginModal>
+      <BackButton onClick={handleBack}>Return</BackButton>
+    </>
   );
 };
 

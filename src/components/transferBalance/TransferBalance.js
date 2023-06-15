@@ -12,17 +12,13 @@ const TransferBalanceCard = styled.div`
   border-radius: 10px;
   padding: 16px;
   width: 300px;
-  position: absolute;
-  top: 50%;
-  left: 15%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
 
   h2 {
     margin-bottom: 16px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
   }
 

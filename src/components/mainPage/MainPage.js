@@ -9,35 +9,88 @@ import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
+`;
+
 const Card = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  top: 7vh;
+  margin-top: 10vh;
   margin-left: 3vw;
+
+  @media (max-width: 768px) {
+    margin-top: 5vh;
+    margin-left: 0;
+  }
 `;
+
 const History = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  top: 12vh;
+  margin-top: 5vh;
   margin-left: 3vw;
+
+  @media (max-width: 768px) {
+    margin-top: 5vh;
+    margin-left: 0;
+  }
 `;
+
 const Balance = styled.div`
-  position: relative;
+  margin-top: -75.2vh;
   margin-left: 30vw;
-  bottom: 62vh;
+
+  @media (max-width: 768px) {
+    margin-top: 5vh;
+    margin-left: 0;
+  }
 `;
+
 const Transfer = styled.div`
-  position: relative;
+  margin-top: 5vh;
   margin-left: 30vw;
-  bottom: 32vh;
+
+  @media (max-width: 768px) {
+    margin-top: 5vh;
+    margin-left: 0;
+  }
 `;
+
 const LineGraphicon = styled.div`
-  position: relative;
-  margin-left: 40vw;
-  bottom: 83vh;
+  margin-top: -72.4vh;
+  margin-left: 55vw;
+
+  @media (max-width: 768px) {
+    margin-top: 5vh;
+    margin-left: 0;
+  }
 `;
+
+const LogoutButton = styled.button`
+  position: absolute;
+  top: 1vh;
+  left: 1vw;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0069d9;
+  }
+
+  @media (max-width: 768px) {
+    position: static;
+    margin-top: 5vh;
+  }
+`;
+
 const Main = () => {
   const { userId } = useContext(AuthContext);
   const [userData, setUserData] = useState({});
@@ -146,30 +199,32 @@ const Main = () => {
 
   return (
     <>
-      <Card>
-        <CreditCard
-          accountType="Credit Card"
-          cardBrand="Visa"
-          balance={userData.balance}
-          transaction_number={userData.transaction_number}
-        />
-      </Card>
-      <History>
-        <Transactions transactions={transactions} />
-      </History>
-      <Balance>
-        <AddBalance handleAddBalance={handleAddBalance} />
-      </Balance>
-      <Transfer>
-        <TransferBalance
-          userData={userData}
-          setTriggerFetch={setTriggerFetch}
-        />
-      </Transfer>
-      <LineGraphicon>
-        <LineGraph userData={userData} />
-      </LineGraphicon>
-      <button onClick={handleLogoutClick}>Logout</button>
+      <Wrapper>
+        <Card>
+          <CreditCard
+            accountType="Credit Card"
+            cardBrand="Visa"
+            balance={userData.balance}
+            transaction_number={userData.transaction_number}
+          />
+        </Card>
+        <History>
+          <Transactions transactions={transactions} />
+        </History>
+        <Balance>
+          <AddBalance handleAddBalance={handleAddBalance} />
+        </Balance>
+        <Transfer>
+          <TransferBalance
+            userData={userData}
+            setTriggerFetch={setTriggerFetch}
+          />
+        </Transfer>
+        <LineGraphicon>
+          <LineGraph userData={userData} />
+        </LineGraphicon>
+      </Wrapper>
+      <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
     </>
   );
 };
