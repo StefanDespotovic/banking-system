@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
+const fadeAnimation = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+    `;
 const ModalContent = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
@@ -18,6 +26,13 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: gray 1px solid;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.4s ease;
+  p {
+    color: red;
+    margin-top: 8px;
+  }
 `;
 
 const Title = styled.h2`
@@ -38,19 +53,21 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 2;
 `;
 
 const Button = styled.button`
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: rgb(0, 123, 255);
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
   font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
-  margin-top: 20px;
+  display: block;
+  margin: 0px auto;
+  margin-top: 1vh;
 
   &:hover {
     background-color: #0069d9;
@@ -58,8 +75,14 @@ const Button = styled.button`
 `;
 
 function AddBalanceModal({ onAdd, closeModal }) {
+  const [showModal, setShowModal] = useState(false);
   const [value, setValue] = useState("");
   const [textValue, setTextValue] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setShowModal(true);
+  }, []);
 
   const handleChange = (event) => {
     const input = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
@@ -72,8 +95,12 @@ function AddBalanceModal({ onAdd, closeModal }) {
   };
 
   const handleClick = () => {
-    if (value || textValue) {
-      // Call the onAdd function to update the balance and add a new transaction
+    if (!textValue) {
+      setError("Seller/Sender Name is required.");
+    } else if (!value) {
+      setError("Value is required.");
+    } else {
+      setError("");
       onAdd(parseFloat(value), textValue);
       closeModal();
       setValue("");
@@ -97,9 +124,9 @@ function AddBalanceModal({ onAdd, closeModal }) {
 
   return (
     <>
-      <ModalOverlay>
+      <ModalOverlay show={showModal}>
         <Modal>
-          <ModalContent ref={modalRef}>
+          <ModalContent ref={modalRef} show={showModal}>
             <Title>Add Balance</Title>
             <input
               type="text"
@@ -114,8 +141,14 @@ function AddBalanceModal({ onAdd, closeModal }) {
               onChange={handleChange}
               placeholder="Value"
             />
+
             <Button onClick={handleClick}>Add Balance</Button>
             <Button onClick={closeModal}>Close</Button>
+            {error && (
+              <p>
+                <div>{error}</div>
+              </p>
+            )}
           </ModalContent>
         </Modal>
       </ModalOverlay>

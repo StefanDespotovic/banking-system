@@ -1,9 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthContext";
+import styled, { keyframes } from "styled-components";
 
-import styled from "styled-components";
-
+const fadeAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 const LoginModal = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
@@ -21,6 +28,8 @@ const LoginModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.4s ease;
 `;
 
 const Form = styled.form`
@@ -54,15 +63,15 @@ const Label = styled.label`
 `;
 
 const Button = styled.button`
-  background-color: #007bff;
+  background-color: rgb(0, 123, 255);
+  color: rgb(255, 255, 255);
   border: none;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
+  border-radius: 5px;
   font-size: 16px;
-  font-weight: 700;
-  margin-top: 16px;
   padding: 8px 16px;
+  cursor: pointer;
+  display: block;
+  margin: 0px auto;
 
   &:hover {
     background-color: #0069d9;
@@ -94,13 +103,17 @@ const BackButton = styled.button`
   }
 `;
 const Login = () => {
+  const [showLogin, setShowLogin] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
   const { handleLogin } = useContext(AuthContext);
-
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setShowLogin(true);
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -131,12 +144,16 @@ const Login = () => {
       setLoginError("Error connecting to server. Please try again.");
     }
   };
+
   const handleBack = () => {
-    navigate("/");
+    setShowLogin(false);
+    setTimeout(() => {
+      navigate("/");
+    }, 500); //
   };
   return (
     <>
-      <LoginModal>
+      <LoginModal show={showLogin}>
         <Form onSubmit={handleSubmit}>
           {loginError && <Error>{loginError}</Error>}
           <Label>

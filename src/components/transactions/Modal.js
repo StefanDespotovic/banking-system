@@ -1,6 +1,14 @@
-import React, { useEffect, useRef } from "react";
-import styled from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
+import styled, { keyframes } from "styled-components";
 
+const fadeAnimation = keyframes`
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+    `;
 const ModalContent = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
@@ -19,6 +27,9 @@ const ModalContent = styled.div`
   flex-direction: column;
   align-items: center;
   max-height: 70vh;
+  border: gray 1px solid;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.4s ease;
   overflow-y: scroll;
 
   /* Hide the scrollbar */
@@ -57,6 +68,18 @@ const TransactionItem = styled.li`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1vh;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    opacity: ${(props) => (props.last ? 0 : 1)};
+  }
 
   div:last-child {
     display: flex;
@@ -99,7 +122,7 @@ const ModalOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 2;
 `;
 const History = styled.div`
@@ -123,7 +146,12 @@ const Button = styled.button`
   }
 `;
 function TransactionsModal({ closeModal, transactions }) {
+  const [showModal, setShowModal] = useState(false);
   const modalRef = useRef(null);
+
+  useEffect(() => {
+    setShowModal(true);
+  }, []);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -139,14 +167,17 @@ function TransactionsModal({ closeModal, transactions }) {
 
   return (
     <>
-      <ModalOverlay>
+      <ModalOverlay show={showModal}>
         <Modal>
-          <ModalContent ref={modalRef}>
+          <ModalContent ref={modalRef} show={showModal}>
             <Title>Transaction History</Title>
             {transactions.length > 0 ? (
               <TransactionList>
-                {transactions?.map((transaction) => (
-                  <TransactionItem key={transaction.id}>
+                {transactions?.map((transaction, index) => (
+                  <TransactionItem
+                    key={transaction.id}
+                    last={index === transactions.length - 1}
+                  >
                     <div>
                       <SellerName>{transaction.seller_sender_name}</SellerName>
                       <Date>{`${transaction.date} ${transaction.time}`}</Date>

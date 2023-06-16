@@ -32,6 +32,18 @@ const TransactionItem = styled.li`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    opacity: ${(props) => (props.last ? 0 : 1)};
+  }
 
   div:last-child {
     display: flex;
@@ -97,8 +109,11 @@ const Transactions = ({ transactions }) => {
       <Title>Transaction History</Title>
       {recentTransactions.length > 0 ? (
         <TransactionList>
-          {recentTransactions.map((transaction) => (
-            <TransactionItem key={transaction.id}>
+          {recentTransactions.map((transaction, index) => (
+            <TransactionItem
+              key={transaction.id}
+              last={index === recentTransactions.length - 1}
+            >
               <div>
                 <SellerName>{transaction.seller_sender_name}</SellerName>
                 <Date>{`${transaction.date} ${transaction.time}`}</Date>

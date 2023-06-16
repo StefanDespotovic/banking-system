@@ -4,15 +4,34 @@ import Transactions from "../transactions/Transactions";
 import AddBalance from "../addBalance/AddBalance";
 import TransferBalance from "../transferBalance/TransferBalance";
 import LineGraph from "../lineGraph/LineGraph";
+import Sidebar from "../sidebar/Sidebar";
 import { AuthContext } from "../../AuthContext";
-import { useNavigate } from "react-router-dom";
 
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const fadeAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+const slideInFromLeft = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.5s ease;
 
   @media (max-width: 768px) {
     align-items: center;
@@ -21,7 +40,7 @@ const Wrapper = styled.div`
 
 const Card = styled.div`
   margin-top: 10vh;
-  margin-left: 3vw;
+  margin-left: 12vw;
 
   @media (max-width: 768px) {
     margin-top: 5vh;
@@ -31,7 +50,7 @@ const Card = styled.div`
 
 const History = styled.div`
   margin-top: 5vh;
-  margin-left: 3vw;
+  margin-left: 12vw;
 
   @media (max-width: 768px) {
     margin-top: 5vh;
@@ -41,7 +60,7 @@ const History = styled.div`
 
 const Balance = styled.div`
   margin-top: -75.2vh;
-  margin-left: 30vw;
+  margin-left: 36vw;
 
   @media (max-width: 768px) {
     margin-top: 5vh;
@@ -51,7 +70,7 @@ const Balance = styled.div`
 
 const Transfer = styled.div`
   margin-top: 5vh;
-  margin-left: 30vw;
+  margin-left: 36vw;
 
   @media (max-width: 768px) {
     margin-top: 5vh;
@@ -60,51 +79,39 @@ const Transfer = styled.div`
 `;
 
 const LineGraphicon = styled.div`
-  margin-top: -72.4vh;
-  margin-left: 55vw;
+  margin-top: -73.5vh;
+  margin-left: 60vw;
 
   @media (max-width: 768px) {
     margin-top: 5vh;
     margin-left: 0;
   }
 `;
-
-const LogoutButton = styled.button`
-  position: absolute;
-  top: 1vh;
-  left: 1vw;
-  background-color: #007bff;
-  color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  padding: 8px 16px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #0069d9;
-  }
+const SideBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.5s ease,
+    ${slideInFromLeft} 1s ease-in-out forwards;
 
   @media (max-width: 768px) {
-    position: static;
-    margin-top: 5vh;
+    opacity: 0;
   }
 `;
 
 const Main = () => {
   const { userId } = useContext(AuthContext);
+  const [showMain, setShowMain] = useState(false);
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [triggerFetch, setTriggerFetch] = useState(false);
-  const { handleLogout } = useContext(AuthContext);
 
-  const navigate = useNavigate();
-  const handleLogoutClick = () => {
-    handleLogout();
-    navigate("/");
-  };
+  useEffect(() => {
+    setShowMain(true);
+  }, []);
 
   const fetchUserData = async () => {
     try {
@@ -199,7 +206,7 @@ const Main = () => {
 
   return (
     <>
-      <Wrapper>
+      <Wrapper show={showMain}>
         <Card>
           <CreditCard
             accountType="Credit Card"
@@ -224,7 +231,9 @@ const Main = () => {
           <LineGraph userData={userData} />
         </LineGraphicon>
       </Wrapper>
-      <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+      <SideBar>
+        <Sidebar />
+      </SideBar>
     </>
   );
 };

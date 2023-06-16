@@ -14,10 +14,8 @@ const TransferBalanceCard = styled.div`
   width: 300px;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   h2 {
-    margin-bottom: 16px;
     font-size: 24px;
     font-weight: bold;
   }
@@ -25,9 +23,11 @@ const TransferBalanceCard = styled.div`
   form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     label {
       margin-bottom: 8px;
+      align-items: center;
     }
 
     input,
@@ -36,15 +36,20 @@ const TransferBalanceCard = styled.div`
       border-radius: 4px;
       border: 1px solid #ccc;
       margin-bottom: 16px;
+      align-items: center;
     }
 
     button {
-      padding: 8px 16px;
       background-color: rgb(0, 123, 255);
-      color: white;
+      color: rgb(255, 255, 255);
       border: none;
-      border-radius: 4px;
+      border-radius: 5px;
+      font-size: 16px;
+      padding: 8px 16px;
       cursor: pointer;
+      display: block;
+      margin: 0px auto;
+      align-items: center;
     }
 
     p {

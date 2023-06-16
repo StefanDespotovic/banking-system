@@ -23,15 +23,15 @@ const Title = styled.h2`
 `;
 
 const Button = styled.button`
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: rgb(0, 123, 255);
+  color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
   font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   display: block;
-  margin: 0 auto;
+  margin: 0px auto;
 
   &:hover {
     background-color: #0069d9;

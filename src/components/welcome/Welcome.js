@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const fadeAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 const WelcomeLogin = styled.div`
   background: radial-gradient(
@@ -19,6 +28,8 @@ const WelcomeLogin = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  animation: ${fadeAnimation} 0.5s ease;
 `;
 
 const Title = styled.h1`
@@ -58,18 +69,28 @@ const RegisterButton = styled.button`
 `;
 
 const Welcome = () => {
+  const [showWelcome, setShowWelcome] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setShowWelcome(true);
+  }, []);
+
   const handleLoginClick = () => {
-    navigate("/login");
+    setShowWelcome(false);
+    setTimeout(() => {
+      navigate("/login");
+    }, 500);
   };
 
   const handleRegisterClick = () => {
-    navigate("/Register");
+    setShowWelcome(false);
+    setTimeout(() => {
+      navigate("/register");
+    }, 500);
   };
-
   return (
-    <WelcomeLogin>
+    <WelcomeLogin show={showWelcome}>
       <Title>Welcome</Title>
       <LoginButton onClick={handleLoginClick}>Login</LoginButton>
       <RegisterButton onClick={handleRegisterClick}>Register</RegisterButton>
