@@ -25,22 +25,41 @@ const SideBar = styled.div`
 const HelpButton = styled.button`
   position: absolute;
   transform: translate(50%, 50%);
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: transparent;
+  color: gray;
   border: none;
   border-radius: 5px;
   font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
-  margin-top: 10vh;
-
-  &:hover {
-    background-color: #0069d9;
+  margin-top: 90vh;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    transform: translateX(-100%);
+    animation: underline 2s infinite;
   }
 
-  @media (max-width: 768px) {
-    position: static;
-    margin-top: 5vh;
+  &:hover::after {
+    animation-play-state: paused;
+  }
+
+  @keyframes underline {
+    0% {
+      transform: translateX(-100%);
+    }
+    50% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
   }
 `;
 const LogoutButton = styled.button`
@@ -85,7 +104,7 @@ const Sidebar = () => {
   return (
     <SideBar>
       <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
-      <HelpButton onClick={openModal}>Help</HelpButton>
+      <HelpButton onClick={openModal}>Help?</HelpButton>
       {isModalOpen && <HelpModal closeModal={closeModal} />}
     </SideBar>
   );

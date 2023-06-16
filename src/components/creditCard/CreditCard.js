@@ -4,7 +4,7 @@ import styled from "styled-components";
 const CardWrapper = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    rgb(0, 75, 101) 0%,
     rgb(0, 0, 0) 99.4%
   );
   border-radius: 10px;
