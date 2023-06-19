@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../AuthContext";
 import { useNavigate } from "react-router-dom";
 import HelpModal from "./HelpModal";
@@ -19,6 +19,11 @@ const SideBar = styled.div`
 
   @media (max-width: 768px) {
     align-items: center;
+  }
+
+  p {
+    color: white;
+    font-size: 20px;
   }
 `;
 
@@ -63,7 +68,7 @@ const HelpButton = styled.button`
   }
 `;
 const LogoutButton = styled.button`
-  background-color: rgb(0, 123, 255);
+  background-color: #5f6a9b;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
@@ -75,7 +80,7 @@ const LogoutButton = styled.button`
   margin-top: 2vh;
 
   &:hover {
-    background-color: #0069d9;
+    background-color: #8369a3;
   }
 
   @media (max-width: 768px) {
@@ -84,10 +89,25 @@ const LogoutButton = styled.button`
   }
 `;
 
-const Sidebar = () => {
+const Sidebar = ({ userData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
   const { handleLogout } = useContext(AuthContext);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const date = new Date();
+      const hours = date.getHours().toString().padStart(2, "0");
+      const minutes = date.getMinutes().toString().padStart(2, "0");
+      const seconds = date.getSeconds().toString().padStart(2, "0");
+      const time = `${hours}:${minutes}:${seconds}`;
+      setCurrentTime(time);
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
   const navigate = useNavigate();
   const handleLogoutClick = () => {
     handleLogout();
@@ -104,6 +124,8 @@ const Sidebar = () => {
   return (
     <SideBar>
       <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
+      <p>Hello {`${userData.name}`}</p>
+      <p>{currentTime}</p>
       <HelpButton onClick={openModal}>Help?</HelpButton>
       {isModalOpen && <HelpModal closeModal={closeModal} />}
     </SideBar>

@@ -24,14 +24,14 @@ app.use(bodyParser.json());
 
 //////////////// for registration new users
 app.post("/api/register", (req, res) => {
-  const { username, password } = req.body;
+  const { name, username, password } = req.body;
   const transactionNumber = Math.floor(
     1000000000000 + Math.random() * 9000000000000
   ).toString();
 
   const createUserQuery =
-    "INSERT INTO users (username, password, transaction_number, balance) VALUES (?, ?, ?, ?)";
-  const createUserValues = [username, password, transactionNumber, 50];
+    "INSERT INTO users (name, username, password, transaction_number, balance) VALUES (?, ?, ?, ?, ?)";
+  const createUserValues = [name, username, password, transactionNumber, 50];
 
   connection.query(createUserQuery, createUserValues, (error, results) => {
     if (error) {
@@ -65,7 +65,7 @@ app.post("/api/register", (req, res) => {
 
 //////////////// for testing fetching all users
 app.get("/api/users", (req, res) => {
-  const query = "SELECT * FROM users";
+  const query = "SELECT username, transaction_number, id FROM users";
   connection.query(query, (error, results) => {
     if (error) {
       console.error("Error fetching users: ", error);
@@ -81,7 +81,7 @@ app.get("/api/users/:id", (req, res) => {
   const userId = req.params.id;
 
   const query =
-    "SELECT balance, transaction_number, username, id FROM users WHERE id = ?";
+    "SELECT balance, transaction_number, username, name, id FROM users WHERE id = ?";
   const values = [userId];
 
   connection.query(query, values, (error, results) => {

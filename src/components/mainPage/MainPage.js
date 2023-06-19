@@ -232,7 +232,7 @@ const Main = () => {
         </LineGraphicon>
       </Wrapper>
       <SideBar>
-        <Sidebar />
+        <Sidebar userData={userData} />
       </SideBar>
     </>
   );

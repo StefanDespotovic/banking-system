@@ -4,7 +4,7 @@ import styled from "styled-components";
 const TransferBalanceCard = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    rgb(0, 75, 101) 0%,
     rgb(0, 0, 0) 99.4%
   );
   color: white;
@@ -40,7 +40,7 @@ const TransferBalanceCard = styled.div`
     }
 
     button {
-      background-color: rgb(0, 123, 255);
+      background-color: #5f6a9b;
       color: rgb(255, 255, 255);
       border: none;
       border-radius: 5px;
@@ -50,10 +50,14 @@ const TransferBalanceCard = styled.div`
       display: block;
       margin: 0px auto;
       align-items: center;
+
+      &:hover {
+        background-color: #8369a3;
+      }
     }
 
     p {
-      color: red;
+      color: #ff5b5b;
       margin-top: 8px;
     }
   }

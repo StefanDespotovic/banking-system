@@ -5,7 +5,7 @@ const StyledLineGraphIcon = styled.div`
   position: relative;
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    rgb(0, 75, 101) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -85,8 +85,8 @@ const LineGraphIcon = ({ chartData, yAxisLabels, lineColor }) => {
                 cx={x}
                 cy={y + 20}
                 r={4}
-                fill="#FFFFFF"
-                stroke={lineColor}
+                fill="gray"
+                stroke={"black"}
                 strokeWidth={1}
                 onMouseEnter={() => handleCircleHover(data)}
                 onMouseLeave={handleCircleLeave}

@@ -89,7 +89,7 @@ const LineGraph = ({ userData }) => {
     <LineGraphIcon
       chartData={chartData}
       yAxisLabels={yAxisLabels}
-      lineColor="#007BFF"
+      lineColor="white"
     />
   );
 };

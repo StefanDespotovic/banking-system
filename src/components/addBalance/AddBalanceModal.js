@@ -12,7 +12,7 @@ const fadeAnimation = keyframes`
 const ModalContent = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    rgb(0, 75, 101) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@ const ModalContent = styled.div`
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation: ${fadeAnimation} 0.4s ease;
   p {
-    color: red;
+    color: #ff5b5b;
     margin-top: 8px;
   }
 `;
@@ -58,7 +58,7 @@ const ModalOverlay = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: rgb(0, 123, 255);
+  background-color: #5f6a9b;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
@@ -70,7 +70,7 @@ const Button = styled.button`
   margin-top: 1vh;
 
   &:hover {
-    background-color: #0069d9;
+    background-color: #8369a3;
   }
 `;
 

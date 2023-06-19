@@ -14,7 +14,7 @@ const fadeAnimation = keyframes`
 const RegisterModal = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    rgb(0, 75, 101) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -63,7 +63,7 @@ const Label = styled.label`
 `;
 
 const Button = styled.button`
-  background-color: rgb(0, 123, 255);
+  background-color: #5f6a9b;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
@@ -74,14 +74,14 @@ const Button = styled.button`
   margin: 0px auto;
 
   &:hover {
-    background-color: #0069d9;
+    background-color: #8369a3;
   }
 `;
 const BackButton = styled.button`
   position: absolute;
   top: 1vh;
   left: 1vw;
-  background-color: #007bff;
+  background-color: #5f6a9b;
   color: #ffffff;
   border: none;
   border-radius: 5px;
@@ -90,7 +90,7 @@ const BackButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: #0069d9;
+    background-color: #8369a3;
   }
 
   @media (max-width: 768px) {
@@ -100,6 +100,7 @@ const BackButton = styled.button`
 `;
 
 const Register = () => {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [reenterPassword, setReenterPassword] = useState("");
@@ -116,7 +117,7 @@ const Register = () => {
     event.preventDefault();
     setError(null);
 
-    if (!username || !password || !reenterPassword) {
+    if (!name || !username || !password || !reenterPassword) {
       setError("Please fill in all fields.");
       return;
     }
@@ -133,6 +134,7 @@ const Register = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          name,
           username,
           password,
         }),
@@ -161,6 +163,13 @@ const Register = () => {
         <Form onSubmit={handleSubmit}>
           {error && <span>{error.message}</span>}
           <Label>
+            <span>Name:</span>
+            <input
+              type="text"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              required
+            />
             <span>Username:</span>
             <input
               type="text"
