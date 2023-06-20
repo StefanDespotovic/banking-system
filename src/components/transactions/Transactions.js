@@ -5,20 +5,20 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
-  padding-bottom: 3vw;
-  width: 300px;
+  padding-bottom: 3vh;
+  width: 19vw;
   height: auto;
   color: white;
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 2.5vh;
   font-weight: bold;
 `;
 
@@ -52,23 +52,23 @@ const TransactionItem = styled.li`
 `;
 
 const SellerName = styled.div`
-  font-size: 16px;
+  font-size: 2vh;
   font-weight: bold;
 `;
 
 const Date = styled.div`
-  font-size: 12px;
+  font-size: 1.6vh;
   color: #6c757d;
 `;
 
 const Price = styled.div`
-  font-size: 18px;
+  font-size: 2.2vh;
   font-weight: bold;
   margin-right: 5px;
 `;
 
 const Currency = styled.div`
-  font-size: 12px;
+  font-size: 1.6vh;
   color: #6c757d;
 `;
 const History = styled.div`
@@ -78,18 +78,19 @@ const History = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 2vh;
   padding: 8px 16px;
   cursor: pointer;
   display: block;
   margin: 0 auto;
+  margin-top: 6vh;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 `;
 

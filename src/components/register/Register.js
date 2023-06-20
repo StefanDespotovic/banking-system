@@ -14,13 +14,13 @@ const fadeAnimation = keyframes`
 const RegisterModal = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 16px;
-  width: 300px;
+  padding: 2vh 2vw;
+  width: 19vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -29,7 +29,7 @@ const RegisterModal = styled.div`
   flex-direction: column;
   align-items: center;
   opacity: ${(props) => (props.show ? 1 : 0)};
-  animation: ${fadeAnimation} 0.8s ease;
+  animation: ${fadeAnimation} 0.4s ease;
 `;
 
 const Form = styled.form`
@@ -43,54 +43,54 @@ const Label = styled.label`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 16px;
+  margin-bottom: 1.5vh;
   width: 100%;
   color: white;
 
   & > span {
-    font-size: 14px;
+    font-size: 2vh;
     font-weight: 700;
-    margin-bottom: 8px;
+    margin-bottom: 0.8vh;
   }
 
   & > input {
     border: none;
     border-radius: 4px;
-    padding: 8px;
+    padding: 0.8vh;
     width: 100%;
-    font-size: 14px;
+    font-size: 2vh;
   }
 `;
 
 const Button = styled.button`
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-  padding: 8px 16px;
+  font-size: 2vh;
+  padding: 0.8vh 1.6vw;
   cursor: pointer;
   display: block;
   margin: 0px auto;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 `;
 const BackButton = styled.button`
   position: absolute;
   top: 1vh;
   left: 1vw;
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-  padding: 8px 16px;
+  font-size: 2vh;
+  padding: 0.8vh 1.6vw;
   cursor: pointer;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 
   @media (max-width: 768px) {

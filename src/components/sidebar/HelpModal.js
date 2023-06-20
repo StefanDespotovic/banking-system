@@ -13,13 +13,12 @@ const fadeAnimation = keyframes`
 const ModalContent = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
-  width: 300px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,12 +33,12 @@ const ModalContent = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 2.5vh;
   font-weight: bold;
 `;
 
 const Description = styled.p`
-  font-size: 16px;
+  font-size: 2vh;
   margin-top: 10px;
   text-align: center;
 `;
@@ -83,17 +82,17 @@ const ModalOverlay = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 2vh;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 `;
 

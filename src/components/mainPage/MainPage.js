@@ -17,19 +17,11 @@ const fadeAnimation = keyframes`
     opacity: 1;
   }
 `;
-const slideInFromLeft = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
-`;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation: ${fadeAnimation} 0.5s ease;
 
@@ -38,66 +30,77 @@ const Wrapper = styled.div`
   }
 `;
 
-const Card = styled.div`
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
   margin-top: 10vh;
-  margin-left: 12vw;
 
   @media (max-width: 768px) {
-    margin-top: 5vh;
-    margin-left: 0;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
-const History = styled.div`
-  margin-top: 5vh;
+const CardHistoryWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   margin-left: 12vw;
+  margin-right: 6vw;
+  margin-bottom: 2vh;
 
   @media (max-width: 768px) {
-    margin-top: 5vh;
-    margin-left: 0;
+    margin: 0 auto;
+    max-width: 90vw;
+    margin-bottom: 2vh;
+  }
+`;
+
+const Card = styled.div`
+  margin-bottom: 2vh;
+`;
+
+const History = styled.div``;
+
+const BalanceTransferWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: -2vw;
+  margin-right: 4vw;
+  margin-bottom: 2vh;
+
+  @media (max-width: 768px) {
+    margin: 0 auto;
+    max-width: 90vw;
+    margin-bottom: 2vh;
   }
 `;
 
 const Balance = styled.div`
-  margin-top: -75.2vh;
-  margin-left: 36vw;
+  margin-bottom: 2vh;
+`;
+
+const Transfer = styled.div``;
+
+const LineGraphWrapper = styled.div`
+  margin-bottom: 2vh;
 
   @media (max-width: 768px) {
-    margin-top: 5vh;
-    margin-left: 0;
+    margin: 0 auto;
+    max-width: 90vw;
+    margin-bottom: 2vh;
   }
 `;
 
-const Transfer = styled.div`
-  margin-top: 5vh;
-  margin-left: 36vw;
-
-  @media (max-width: 768px) {
-    margin-top: 5vh;
-    margin-left: 0;
-  }
-`;
-
-const LineGraphicon = styled.div`
-  margin-top: -73.5vh;
-  margin-left: 60vw;
-
-  @media (max-width: 768px) {
-    margin-top: 5vh;
-    margin-left: 0;
-  }
-`;
 const SideBar = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   opacity: ${(props) => (props.show ? 1 : 0)};
-  animation: ${fadeAnimation} 0.5s ease,
-    ${slideInFromLeft} 1s ease-in-out forwards;
-
-  @media (max-width: 768px) {
-    opacity: 0;
-  }
+  animation: ${fadeAnimation} 0.5s ease;
 `;
 
 const Main = () => {
@@ -149,23 +152,20 @@ const Main = () => {
     }
   };
 
-  useEffect(
-    () => {
-      fetchUserData();
-      fetchTransactionsData();
-    }, // eslint-disable-next-line
-    [userId, triggerFetch]
-  );
+  useEffect(() => {
+    fetchUserData();
+    fetchTransactionsData();
+  }, [userId, triggerFetch]);
 
   const handleAddBalance = async (value, seller_sender_name) => {
-    setLoading(true); // Set loading state to true before making the request
+    setLoading(true);
 
     const numericValue = parseFloat(value).toFixed(2);
 
     try {
       if (!seller_sender_name) {
         setError("Seller/Sender Name is required.");
-        setLoading(false); // Set loading state to false when an error occurs
+        setLoading(false);
         return;
       }
 
@@ -182,7 +182,7 @@ const Main = () => {
       });
 
       if (response.ok) {
-        fetchUserData(); // Refresh user data and transaction history
+        fetchUserData();
         fetchTransactionsData();
       } else {
         const data = await response.json();
@@ -192,7 +192,7 @@ const Main = () => {
       console.error("Error connecting to server", error);
       setError("Error connecting to server");
     } finally {
-      setLoading(false); // Set loading state to false after the request is complete
+      setLoading(false);
     }
   };
 
@@ -207,31 +207,37 @@ const Main = () => {
   return (
     <>
       <Wrapper show={showMain}>
-        <Card>
-          <CreditCard
-            accountType="Credit Card"
-            cardBrand="Visa"
-            balance={userData.balance}
-            transaction_number={userData.transaction_number}
-          />
-        </Card>
-        <History>
-          <Transactions transactions={transactions} />
-        </History>
-        <Balance>
-          <AddBalance handleAddBalance={handleAddBalance} />
-        </Balance>
-        <Transfer>
-          <TransferBalance
-            userData={userData}
-            setTriggerFetch={setTriggerFetch}
-          />
-        </Transfer>
-        <LineGraphicon>
-          <LineGraph userData={userData} />
-        </LineGraphicon>
+        <ContentWrapper>
+          <CardHistoryWrapper>
+            <Card>
+              <CreditCard
+                accountType="Credit Card"
+                cardBrand="Visa"
+                balance={userData.balance}
+                transaction_number={userData.transaction_number}
+              />
+            </Card>
+            <History>
+              <Transactions transactions={transactions} />
+            </History>
+          </CardHistoryWrapper>
+          <BalanceTransferWrapper>
+            <Balance>
+              <AddBalance handleAddBalance={handleAddBalance} />
+            </Balance>
+            <Transfer>
+              <TransferBalance
+                userData={userData}
+                setTriggerFetch={setTriggerFetch}
+              />
+            </Transfer>
+          </BalanceTransferWrapper>
+          <LineGraphWrapper>
+            <LineGraph userData={userData} />
+          </LineGraphWrapper>
+        </ContentWrapper>
       </Wrapper>
-      <SideBar>
+      <SideBar show={showMain}>
         <Sidebar userData={userData} />
       </SideBar>
     </>

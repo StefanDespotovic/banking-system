@@ -10,20 +10,36 @@ const SideBar = styled.div`
   height: 100vh;
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(50, 50, 50) 0%,
+    #122543 0%,
     rgb(0, 0, 0) 99.4%
   );
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 
-  @media (max-width: 768px) {
-    align-items: center;
+  p {
+    margin-top: 4vh;
+    margin-left: 2vw;
+    color: white;
+    font-size: 2.3vh;
   }
 
-  p {
-    color: white;
-    font-size: 20px;
+  @media (max-width: 768px) {
+    position: absolute;
+    width: 100vw;
+    height: 8vh;
+    background: radial-gradient(
+      circle at 24.1% 68.8%,
+      #122543 0%,
+      rgb(0, 0, 0) 99.4%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    p {
+      opacity: 0;
+    }
   }
 `;
 
@@ -34,7 +50,7 @@ const HelpButton = styled.button`
   color: gray;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 2vh;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 90vh;
@@ -49,6 +65,13 @@ const HelpButton = styled.button`
     background-color: #ffffff;
     transform: translateX(-100%);
     animation: underline 2s infinite;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    transform: translate(50%, 50%);
+    margin-top: 0vh;
+    margin-left: 68vw;
   }
 
   &:hover::after {
@@ -67,12 +90,13 @@ const HelpButton = styled.button`
     }
   }
 `;
+
 const LogoutButton = styled.button`
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 2vh;
   padding: 8px 16px;
   cursor: pointer;
   display: block;
@@ -80,12 +104,14 @@ const LogoutButton = styled.button`
   margin-top: 2vh;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 
   @media (max-width: 768px) {
-    position: static;
-    margin-top: 5vh;
+    position: absolute;
+    transform: translate(50%, 50%);
+    margin-top: 0vh;
+    margin-left: -3vw;
   }
 `;
 
@@ -125,7 +151,7 @@ const Sidebar = ({ userData }) => {
     <SideBar>
       <LogoutButton onClick={handleLogoutClick}>Logout</LogoutButton>
       <p>Hello {`${userData.name}`}</p>
-      <p>{currentTime}</p>
+      <p style={{ marginLeft: "2.3vw", marginTop: "1vh" }}>{currentTime}</p>
       <HelpButton onClick={openModal}>Help?</HelpButton>
       {isModalOpen && <HelpModal closeModal={closeModal} />}
     </SideBar>

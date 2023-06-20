@@ -4,19 +4,20 @@ import styled from "styled-components";
 const TransferBalanceCard = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   color: white;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
-  width: 300px;
+  padding-bottom: 2vh;
+  width: 19vw;
   display: flex;
   flex-direction: column;
 
   h2 {
-    font-size: 24px;
+    font-size: 2.5vh;
     font-weight: bold;
   }
 
@@ -26,39 +27,42 @@ const TransferBalanceCard = styled.div`
     align-items: center;
 
     label {
-      margin-bottom: 8px;
+      margin-bottom: 0.5vh;
       align-items: center;
+      font-size: 2vh;
     }
 
     input,
     select {
-      padding: 8px;
+      padding: 0.5vh;
       border-radius: 4px;
       border: 1px solid #ccc;
       margin-bottom: 16px;
+      font-size: 2vh;
       align-items: center;
     }
 
     button {
-      background-color: #5f6a9b;
+      background-color: RGB(0, 60, 95);
       color: rgb(255, 255, 255);
       border: none;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 2vh;
       padding: 8px 16px;
       cursor: pointer;
       display: block;
       margin: 0px auto;
       align-items: center;
+      margin-top: 2vh;
 
       &:hover {
-        background-color: #8369a3;
+        background-color: #0075b9;
       }
     }
 
     p {
       color: #ff5b5b;
-      margin-top: 8px;
+      margin-top: 2vh;
     }
   }
 `;

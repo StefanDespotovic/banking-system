@@ -12,13 +12,13 @@ const fadeAnimation = keyframes`
 const ModalContent = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
-  width: 300px;
+  width: 21vw;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -34,15 +34,15 @@ const ModalContent = styled.div`
 
   /* Hide the scrollbar */
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent; /* Adjust the color if needed */
+  scrollbar-color: transparent transparent;
 
   /* Firefox */
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent; /* Adjust the color if needed */
+  scrollbar-color: transparent transparent;
 
   /* WebKit */
   &::-webkit-scrollbar {
-    width: 6px; /* Adjust the width if needed */
+    width: 6px;
   }
 
   &::-webkit-scrollbar-track {
@@ -59,7 +59,7 @@ const TransactionList = styled.ul`
   padding: 0;
 `;
 const Title = styled.h2`
-  font-size: 24px;
+  font-size: 2.5vh;
   font-weight: bold;
 `;
 
@@ -67,7 +67,7 @@ const TransactionItem = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 1vh;
   position: relative;
 
   &::after {
@@ -88,24 +88,24 @@ const TransactionItem = styled.li`
 `;
 
 const SellerName = styled.div`
-  font-size: 16px;
+  font-size: 2vh;
   font-weight: bold;
 `;
 
 const Date = styled.div`
-  font-size: 12px;
+  font-size: 1.6vh;
   color: #6c757d;
 `;
 
 const Price = styled.div`
-  font-size: 18px;
+  font-size: 2vh;
   font-weight: bold;
   margin-left: 4vw !important;
   margin-right: 0.3vw !important;
 `;
 
 const Currency = styled.div`
-  font-size: 12px;
+  font-size: 1.6vh;
   color: #6c757d;
 `;
 
@@ -132,17 +132,17 @@ const History = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: #5f6a9b;
+  background-color: RGB(0, 60, 95);
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 2vh;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;
 
   &:hover {
-    background-color: #8369a3;
+    background-color: #0075b9;
   }
 `;
 function TransactionsModal({ closeModal, transactions }) {

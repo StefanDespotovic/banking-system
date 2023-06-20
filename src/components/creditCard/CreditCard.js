@@ -4,13 +4,13 @@ import styled from "styled-components";
 const CardWrapper = styled.div`
   background: radial-gradient(
     circle at 24.1% 68.8%,
-    rgb(0, 75, 101) 0%,
+    rgb(0, 35, 95) 0%,
     rgb(0, 0, 0) 99.4%
   );
   border-radius: 10px;
   padding: 16px;
-  width: 300px;
-  height: 200px;
+  width: 19vw;
+  height: 22vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -24,23 +24,23 @@ const HeaderWrapper = styled.div`
 `;
 
 const AccountType = styled.div`
-  font-size: 18px;
+  font-size: 2.2vh;
   font-weight: 700;
 `;
 
 const CardBrand = styled.div`
-  font-size: 24px;
+  font-size: 2.7vh;
   font-weight: 700;
 `;
 
 const Balance = styled.div`
-  font-size: 36px;
+  font-size: 4.2vh;
   font-weight: 700;
   text-align: right;
 `;
 
 const TransactionNumber = styled.div`
-  font-size: 16px;
+  font-size: 2vh;
   text-align: center;
 `;
 
