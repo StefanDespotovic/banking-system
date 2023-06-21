@@ -1,70 +1,33 @@
-# Getting Started with Create React App
+# Banking System
+This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Technologies Used
+The following technologies were used to develop this banking system:
 
-## Available Scripts
+* React
+* Node.js
+* Express
+* SQL Database
 
-In the project directory, you can run:
+# Features
 
-### `npm start`
+## Login and Signup Forms
+The system provides login and signup forms for users to create an account or log in to an existing account. Users can enter their credentials, such as username and password, to authenticate themselves.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Current Balance Function
+Users can check the current balance of their accounts. The system retrieves the account balance from the SQL database and displays it to the user.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Transfer Funds
+The banking system allows users to transfer funds from one account to another. Users can specify the recipient's account number and the amount to be transferred. The system validates the transaction and updates the account balances accordingly.
 
-### `npm test`
+## Line Chart
+A line chart is displayed to visualize the account balance history over time. The chart provides a graphical representation of the changes in the account balance.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Add Balance
+Users can add funds to their logged-in account. The system provides a feature to add balance, allowing users to enter the amount they want to add. The system updates the account balance accordingly.
 
-### `npm run build`
+## Transaction History
+The banking system maintains a transaction history that records all the transactions performed by the users. The history includes details such as transaction date, the amount transferred, the sender's and recipient's account information, etc. Users can view their transaction history to track their financial activities.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Conclusion
+In conclusion, this banking system project is built using React, Node.js, Express, and a SQL database. It offers various functionalities such as login and signup forms, checking the current balance, transferring funds between accounts, displaying a line chart for account balance history, adding balance to the logged-in account, and maintaining a transaction history. This project demonstrates the integration of front-end and back-end technologies to create a functional banking system. 
