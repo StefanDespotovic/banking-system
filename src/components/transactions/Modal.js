@@ -52,6 +52,11 @@ const ModalContent = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
 `;
 
 const TransactionList = styled.ul`

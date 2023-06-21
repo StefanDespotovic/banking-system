@@ -15,6 +15,11 @@ const CardWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   color: white;
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
 `;
 
 const HeaderWrapper = styled.div`

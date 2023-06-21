@@ -30,6 +30,15 @@ const ModalContent = styled.div`
   border: gray 1px solid;
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation: ${fadeAnimation} 0.4s ease;
+  @media (max-width: 768px) {
+    width: 70vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+
+    p {
+      opacity: 1 !important;
+    }
+  }
 `;
 
 const Title = styled.h2`

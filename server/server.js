@@ -65,7 +65,7 @@ app.post("/api/register", (req, res) => {
 
 //////////////// for testing fetching all users
 app.get("/api/users", (req, res) => {
-  const query = "SELECT username, transaction_number, id FROM users";
+  const query = "SELECT name, transaction_number, id FROM users";
   connection.query(query, (error, results) => {
     if (error) {
       console.error("Error fetching users: ", error);

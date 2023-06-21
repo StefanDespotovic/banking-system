@@ -15,6 +15,9 @@ const StyledLineGraphIcon = styled.div`
   flex-direction: column;
   align-items: center;
   height: 25vw;
+  @media (max-width: 768px) {
+    height: 60vw;
+  }
 `;
 const Tooltip = styled.div`
   position: absolute;

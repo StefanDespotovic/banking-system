@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../AuthContext";
 import LineGraphIcon from "./LineGraphIcon";
 
-const LineGraph = ({ userData }) => {
+const LineGraph = () => {
   const { userId } = useContext(AuthContext);
   const [chartData, setChartData] = useState([]);
   const [currentBalance, setCurrentBalance] = useState(0);

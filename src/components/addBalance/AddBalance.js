@@ -15,6 +15,11 @@ const Wrapper = styled.div`
   width: 19vw;
   height: auto;
   color: white;
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
 `;
 
 const Title = styled.h2`

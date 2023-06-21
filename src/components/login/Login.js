@@ -30,6 +30,11 @@ const LoginModal = styled.div`
   align-items: center;
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation: ${fadeAnimation} 0.4s ease;
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
 `;
 
 const Form = styled.form`
@@ -102,6 +107,7 @@ const BackButton = styled.button`
   @media (max-width: 768px) {
     position: static;
     margin-top: 5vh;
+    width: 20vw;
   }
 `;
 

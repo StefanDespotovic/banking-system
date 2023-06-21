@@ -15,7 +15,11 @@ const TransferBalanceCard = styled.div`
   width: 19vw;
   display: flex;
   flex-direction: column;
-
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
   h2 {
     font-size: 2.5vh;
     font-weight: bold;

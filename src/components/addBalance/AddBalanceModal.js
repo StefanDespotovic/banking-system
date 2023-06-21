@@ -43,6 +43,11 @@ const ModalContent = styled.div`
     align-items: center;
     font-size: 2vh;
   }
+  @media (max-width: 768px) {
+    width: 75vw;
+    padding: 1vh 3vw;
+    padding-bottom: 3vh;
+  }
 `;
 
 const Title = styled.h2`
