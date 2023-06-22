@@ -1,6 +1,6 @@
 # Banking System
 This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions.
-[![Swipe Gallery](public/logo192.png)](public/index.html)
+[![Swipe Gallery](gallery/main.png)](gallery/gallery.html)
 
 ## Technologies Used
 The following technologies were used to develop this banking system:
