@@ -1,16 +1,12 @@
+require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
 const crypto = require("crypto");
-
 const app = express();
+const port = process.env.PORT || 5000;
+const mysql = require("mysql2");
 
-const connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "banking_system",
-});
+const connection = mysql.createConnection(process.env.DATABASE_URL);
 
 connection.connect((error) => {
   if (error) {
@@ -421,6 +417,6 @@ app.post("/api/login", (req, res) => {
   });
 });
 
-app.listen(5000, () => {
+app.listen(port, () => {
   console.log("Server listening on port 5000");
 });
