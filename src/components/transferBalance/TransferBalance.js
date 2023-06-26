@@ -178,9 +178,9 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
           {userList.map((user) => (
             <option
               key={user.id}
-              value={`${user.username} ${user.transaction_number} ${user.id}`}
+              value={`${user.name} ${user.transaction_number} ${user.id}`}
             >
-              {`${user.username} ${user.transaction_number}`}
+              {`${user.name} ${user.transaction_number}`}
             </option>
           ))}
         </select>
