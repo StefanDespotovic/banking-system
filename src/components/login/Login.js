@@ -149,6 +149,7 @@ const Login = () => {
         setLoginError(data.error);
       }
     } catch (error) {
+      console.log(JSON.stringify(process.env));
       console.error("Error connecting to server", error);
       setLoginError("Error connecting to server. Please try again.");
     }
