@@ -94,7 +94,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
         setTransferError("Invalid transfer amount");
         return;
       }
-      const response = await fetch("http://localhost:5000/api/transfer", {
+      const response = await fetch(`${process.env.DATABASE_URL}/api/transfer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
 
   const fetchUserList = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/users");
+      const response = await fetch(`${process.env.DATABASE_URL}/api/users`);
       if (response.ok) {
         const data = await response.json();
         const filteredUserList = data.filter(

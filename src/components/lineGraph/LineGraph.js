@@ -12,7 +12,7 @@ const LineGraph = () => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/transactions?user_id=${userId}`
+          `${process.env.DATABASE_URL}/api/transactions?user_id=${userId}`
         );
         const data = await response.json();
         const processedData = processData(data);

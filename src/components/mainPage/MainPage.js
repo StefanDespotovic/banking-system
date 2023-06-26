@@ -118,7 +118,9 @@ const Main = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/${userId}`);
+      const response = await fetch(
+        `${process.env.DATABASE_URL}/api/users/${userId}`
+      );
       if (response.ok) {
         const data = await response.json();
         setUserData(data);
@@ -136,7 +138,7 @@ const Main = () => {
   const fetchTransactionsData = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/transactions?user_id=${userId}`
+        `${process.env.DATABASE_URL}/api/transactions?user_id=${userId}`
       );
       if (response.ok) {
         const transactions = await response.json();
@@ -169,7 +171,7 @@ const Main = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:5000/api/balance", {
+      const response = await fetch(`${process.env.DATABASE_URL}/api/balance`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
