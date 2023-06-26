@@ -119,7 +119,7 @@ const Main = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.DATABASE_URL}/api/users/${userId}`
+        `${process.env.CONNECTION_LINK}/api/users/${userId}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -138,7 +138,7 @@ const Main = () => {
   const fetchTransactionsData = async () => {
     try {
       const response = await fetch(
-        `${process.env.DATABASE_URL}/api/transactions?user_id=${userId}`
+        `${process.env.CONNECTION_LINK}/api/transactions?user_id=${userId}`
       );
       if (response.ok) {
         const transactions = await response.json();
@@ -171,17 +171,20 @@ const Main = () => {
         return;
       }
 
-      const response = await fetch(`${process.env.DATABASE_URL}/api/balance`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          value: numericValue,
-          seller_sender_name,
-        }),
-      });
+      const response = await fetch(
+        `${process.env.CONNECTION_LINK}/api/balance`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            value: numericValue,
+            seller_sender_name,
+          }),
+        }
+      );
 
       if (response.ok) {
         fetchUserData();

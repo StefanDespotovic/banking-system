@@ -134,7 +134,7 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.DATABASE_URL}/api/register`, {
+      const response = await fetch(`${process.env.CONNECTION_LINK}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
