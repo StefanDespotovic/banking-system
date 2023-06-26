@@ -12,7 +12,7 @@ const LineGraph = () => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `${process.env.CONNECTION_LINK}/api/transactions?user_id=${userId}`
+          `https://banking-system-jllp.onrender.com/api/transactions?user_id=${userId}`
         );
         const data = await response.json();
         const processedData = processData(data);

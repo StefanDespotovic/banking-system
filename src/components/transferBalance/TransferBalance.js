@@ -95,7 +95,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
         return;
       }
       const response = await fetch(
-        `${process.env.CONNECTION_LINK}/api/transfer`,
+        `https://banking-system-jllp.onrender.com/api/transfer`,
         {
           method: "POST",
           headers: {
@@ -140,7 +140,9 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
 
   const fetchUserList = async () => {
     try {
-      const response = await fetch(`${process.env.CONNECTION_LINK}/api/users`);
+      const response = await fetch(
+        `https://banking-system-jllp.onrender.com/api/users`
+      );
       if (response.ok) {
         const data = await response.json();
         const filteredUserList = data.filter(

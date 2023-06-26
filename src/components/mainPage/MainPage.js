@@ -119,7 +119,7 @@ const Main = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.CONNECTION_LINK}/api/users/${userId}`
+        `https://banking-system-jllp.onrender.com/api/users/${userId}`
       );
       if (response.ok) {
         const data = await response.json();
@@ -138,7 +138,7 @@ const Main = () => {
   const fetchTransactionsData = async () => {
     try {
       const response = await fetch(
-        `${process.env.CONNECTION_LINK}/api/transactions?user_id=${userId}`
+        `https://banking-system-jllp.onrender.com/api/transactions?user_id=${userId}`
       );
       if (response.ok) {
         const transactions = await response.json();
@@ -172,7 +172,7 @@ const Main = () => {
       }
 
       const response = await fetch(
-        `${process.env.CONNECTION_LINK}/api/balance`,
+        `https://banking-system-jllp.onrender.com/api/balance`,
         {
           method: "POST",
           headers: {

@@ -129,16 +129,19 @@ const Login = () => {
     setLoginError("");
 
     try {
-      const response = await fetch(`${process.env.CONNECTION_LINK}/api/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+      const response = await fetch(
+        `https://banking-system-jllp.onrender.com/api/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();

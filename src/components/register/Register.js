@@ -134,17 +134,20 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(`${process.env.CONNECTION_LINK}/api/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          username,
-          password,
-        }),
-      });
+      const response = await fetch(
+        `https://banking-system-jllp.onrender.com/api/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            username,
+            password,
+          }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
