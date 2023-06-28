@@ -1,8 +1,6 @@
 # Banking System
 
-This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions.
-
-<img src="gallery/main.png" alt="Main Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
+This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions. This project is hosted on [Render hosting website](https://render.com/), and database is hosted on [Planetscale](https://planetscale.com/)
 
 ## Technologies Used
 
@@ -19,9 +17,6 @@ The following technologies were used to develop this banking system:
 
 The system provides login and signup forms for users to create an account or log in to an existing account. Users can enter their credentials, such as username and password, to authenticate themselves.
 
-<img src="gallery/welcome.png" alt="Welcome Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
-<img src="gallery/login.png" alt="Login Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
-<img src="gallery/register.png" alt="Register Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
 
 ## Current Balance Function
 
@@ -39,13 +34,9 @@ A line chart is displayed to visualize the account balance history over time. Th
 
 Users can add funds to their logged-in account. The system provides a feature to add balance, allowing users to enter the amount they want to add. The system updates the account balance accordingly.
 
-<img src="gallery/addbalance.png" alt="Add Balance Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
-
 ## Transaction History
 
 The banking system maintains a transaction history that records all the transactions performed by the users. The history includes details such as transaction date, the amount transferred, the sender's and recipient's account information, etc. Users can view their transaction history to track their financial activities.
-
-<img src="gallery/transactions.png" alt="Transactions Image" style="width: 50%; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
 
 # Conclusion
 
