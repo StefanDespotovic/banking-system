@@ -146,7 +146,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
       if (response.ok) {
         const data = await response.json();
         const filteredUserList = data.filter(
-          (user) => user.username !== userData.username
+          (user) => user.name !== userData.name
         );
         setUserList(filteredUserList);
       } else {
@@ -174,10 +174,7 @@ const TransferBalance = ({ userData, setTriggerFetch }) => {
         <select
           id="toAccount"
           value={toAccount}
-          onChange={(e) => {
-            console.log("Selected To Account:", e.target.value);
-            setToAccount(e.target.value);
-          }}
+          onChange={(e) => setToAccount(e.target.value)}
         >
           <option value="">Select an account</option>
           {userList.map((user) => (
