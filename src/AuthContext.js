@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-console.clear();
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -7,24 +7,28 @@ const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    // Check if the user is already logged in
     const storedUserId = localStorage.getItem("userId");
+    console.log("Stored User ID:", storedUserId); // Add this console log
+
     if (storedUserId) {
       setLoggedIn(true);
       setUserId(storedUserId);
+      console.log("User ID set:", storedUserId); // Add this console log
     }
   }, []);
 
   const handleLogin = (userId) => {
     setLoggedIn(true);
     setUserId(userId);
-    localStorage.setItem("userId", userId); // Store the userId in localStorage
+    localStorage.setItem("userId", userId);
+    console.log("User logged in:", userId); // Add this console log
   };
 
   const handleLogout = () => {
     setLoggedIn(false);
     setUserId("");
-    localStorage.removeItem("userId"); // Remove the stored userId from localStorage
+    localStorage.removeItem("userId");
+    console.log("User logged out"); // Add this console log
   };
 
   return (
