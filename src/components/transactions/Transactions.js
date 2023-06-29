@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   padding-bottom: 3vh;
   width: 19vw;
   height: auto;
+  min-height: 12rem;
   color: white;
   @media (max-width: 768px) {
     width: 75vw;
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2.5vh;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -57,23 +58,23 @@ const TransactionItem = styled.li`
 `;
 
 const SellerName = styled.div`
-  font-size: 2vh;
+  font-size: 16px;
   font-weight: bold;
 `;
 
 const Date = styled.div`
-  font-size: 1.6vh;
+  font-size: 12px;
   color: #6c757d;
 `;
 
 const Price = styled.div`
-  font-size: 2.2vh;
+  font-size: 16px;
   font-weight: bold;
   margin-right: 5px;
 `;
 
 const Currency = styled.div`
-  font-size: 1.6vh;
+  font-size: 12px;
   color: #6c757d;
 `;
 const History = styled.div`
@@ -87,7 +88,7 @@ const Button = styled.button`
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   display: block;

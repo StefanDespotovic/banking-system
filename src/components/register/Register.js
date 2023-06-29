@@ -21,6 +21,7 @@ const RegisterModal = styled.div`
   border-radius: 10px;
   padding: 2vh 2vw;
   width: 19vw;
+  min-height: 13rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,7 +54,7 @@ const Label = styled.label`
   color: white;
 
   & > span {
-    font-size: 2vh;
+    font-size: 16px;
     font-weight: 700;
     margin-bottom: 0.8vh;
   }
@@ -63,7 +64,7 @@ const Label = styled.label`
     border-radius: 4px;
     padding: 0.8vh;
     width: 100%;
-    font-size: 2vh;
+    font-size: 16px;
   }
 `;
 
@@ -72,7 +73,7 @@ const Button = styled.button`
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 0.8vh 1.6vw;
   cursor: pointer;
   display: block;
@@ -90,7 +91,7 @@ const BackButton = styled.button`
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 0.8vh 1.6vw;
   cursor: pointer;
 

@@ -11,6 +11,7 @@ const CardWrapper = styled.div`
   padding: 16px;
   width: 19vw;
   height: 22vh;
+  min-height: 11rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,23 +30,23 @@ const HeaderWrapper = styled.div`
 `;
 
 const AccountType = styled.div`
-  font-size: 2.2vh;
+  font-size: 16px;
   font-weight: 700;
 `;
 
 const CardBrand = styled.div`
-  font-size: 2.7vh;
+  font-size: 22px;
   font-weight: 700;
 `;
 
 const Balance = styled.div`
-  font-size: 4.2vh;
+  font-size: 36px;
   font-weight: 700;
   text-align: right;
 `;
 
 const TransactionNumber = styled.div`
-  font-size: 2vh;
+  font-size: 16px;
   text-align: center;
 `;
 

@@ -13,6 +13,7 @@ const Wrapper = styled.div`
   padding: 16px;
   padding-bottom: 2vw;
   width: 19vw;
+  min-height: 5rem;
   height: auto;
   color: white;
   @media (max-width: 768px) {
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2.5vh;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -32,7 +33,7 @@ const Button = styled.button`
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   display: block;

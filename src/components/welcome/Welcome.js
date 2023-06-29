@@ -20,6 +20,7 @@ const WelcomeLogin = styled.div`
   border-radius: 10px;
   padding: 1.5vh 1.5vw;
   width: 19vw;
+  min-height: 8rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -40,7 +41,7 @@ const WelcomeLogin = styled.div`
 const Title = styled.h1`
   color: white;
   margin-bottom: 1.5vh;
-  font-size: 3vh;
+  font-size: 18px;
 `;
 
 const LoginButton = styled.button`
@@ -49,7 +50,7 @@ const LoginButton = styled.button`
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
-  font-size: 2vh;
+  font-size: 16px;
   font-weight: 700;
   margin-top: 1.5vh;
   padding: 1vh 2vw;
@@ -71,7 +72,7 @@ const RegisterButton = styled.button`
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
-  font-size: 2vh;
+  font-size: 16px;
   font-weight: 700;
   margin-top: 1.5vh;
   padding: 1vh 2vw;

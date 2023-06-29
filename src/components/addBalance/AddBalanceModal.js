@@ -19,6 +19,7 @@ const ModalContent = styled.div`
   border-radius: 10px;
   padding: 16px;
   width: 20vw;
+  min-height: 15rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -32,7 +33,7 @@ const ModalContent = styled.div`
   p {
     color: #ff5b5b;
     margin-top: 8px;
-    font-size: 2vh;
+    font-size: 16px;
   }
   input,
   select {
@@ -41,7 +42,7 @@ const ModalContent = styled.div`
     border: 1px solid #ccc;
     margin-bottom: 16px;
     align-items: center;
-    font-size: 2vh;
+    font-size: 16px;
   }
   @media (max-width: 768px) {
     width: 75vw;
@@ -51,7 +52,7 @@ const ModalContent = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2.5vh;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -77,7 +78,7 @@ const Button = styled.button`
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   display: block;

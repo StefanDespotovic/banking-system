@@ -21,7 +21,7 @@ const SideBar = styled.div`
     margin-top: 4vh;
     margin-left: 2vw;
     color: white;
-    font-size: 2.3vh;
+    font-size: 20px;
   }
 
   @media (max-width: 768px) {
@@ -50,7 +50,7 @@ const HelpButton = styled.button`
   color: gray;
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 90vh;
@@ -96,7 +96,7 @@ const LogoutButton = styled.button`
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   display: block;

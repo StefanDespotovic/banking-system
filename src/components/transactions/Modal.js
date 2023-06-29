@@ -19,6 +19,7 @@ const ModalContent = styled.div`
   border-radius: 10px;
   padding: 16px;
   width: 21vw;
+  min-height: 24rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -64,7 +65,7 @@ const TransactionList = styled.ul`
   padding: 0;
 `;
 const Title = styled.h2`
-  font-size: 2.5vh;
+  font-size: 20px;
   font-weight: bold;
 `;
 
@@ -93,24 +94,24 @@ const TransactionItem = styled.li`
 `;
 
 const SellerName = styled.div`
-  font-size: 2vh;
+  font-size: 16px;
   font-weight: bold;
 `;
 
 const Date = styled.div`
-  font-size: 1.6vh;
+  font-size: 12px;
   color: #6c757d;
 `;
 
 const Price = styled.div`
-  font-size: 2vh;
+  font-size: 16px;
   font-weight: bold;
   margin-left: 4vw !important;
   margin-right: 0.3vw !important;
 `;
 
 const Currency = styled.div`
-  font-size: 1.6vh;
+  font-size: 12px;
   color: #6c757d;
 `;
 
@@ -141,7 +142,7 @@ const Button = styled.button`
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;

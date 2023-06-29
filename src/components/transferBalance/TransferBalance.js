@@ -13,6 +13,7 @@ const TransferBalanceCard = styled.div`
   padding: 16px;
   padding-bottom: 2vh;
   width: 19vw;
+  min-height: 15rem;
   display: flex;
   flex-direction: column;
   @media (max-width: 768px) {
@@ -21,7 +22,7 @@ const TransferBalanceCard = styled.div`
     padding-bottom: 3vh;
   }
   h2 {
-    font-size: 2.5vh;
+    font-size: 20px;
     font-weight: bold;
   }
 
@@ -33,7 +34,7 @@ const TransferBalanceCard = styled.div`
     label {
       margin-bottom: 0.5vh;
       align-items: center;
-      font-size: 2vh;
+      font-size: 16px;
     }
 
     input,
@@ -42,7 +43,7 @@ const TransferBalanceCard = styled.div`
       border-radius: 4px;
       border: 1px solid #ccc;
       margin-bottom: 16px;
-      font-size: 2vh;
+      font-size: 16px;
       align-items: center;
     }
 
@@ -51,7 +52,7 @@ const TransferBalanceCard = styled.div`
       color: rgb(255, 255, 255);
       border: none;
       border-radius: 5px;
-      font-size: 2vh;
+      font-size: 16px;
       padding: 8px 16px;
       cursor: pointer;
       display: block;

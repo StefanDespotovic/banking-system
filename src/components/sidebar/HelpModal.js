@@ -20,6 +20,8 @@ const ModalContent = styled.div`
   border-radius: 10px;
   padding: 16px;
   position: absolute;
+  min-height: 24rem;
+  max-height: 80vh;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -31,7 +33,7 @@ const ModalContent = styled.div`
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation: ${fadeAnimation} 0.4s ease;
   @media (max-width: 768px) {
-    width: 70vw;
+    width: 90vw;
     padding: 1vh 3vw;
     padding-bottom: 3vh;
 
@@ -42,14 +44,20 @@ const ModalContent = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 2.5vh;
+  font-size: 20px;
   font-weight: bold;
 `;
 
 const Description = styled.p`
-  font-size: 2vh;
+  font-size: 16px;
   margin-top: 10px;
   text-align: center;
+  overflow: auto;
+  max-height: 50vh;
+
+  @media (min-width: 769px) {
+    overflow: hidden;
+  }
 `;
 
 const BulletList = styled.ul`
@@ -81,7 +89,6 @@ const Modal = styled.div`
 
 const ModalOverlay = styled.div`
   position: fixed;
-
   top: 0;
   left: 0;
   width: 100%;
@@ -95,7 +102,7 @@ const Button = styled.button`
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  font-size: 2vh;
+  font-size: 16px;
   padding: 8px 16px;
   cursor: pointer;
   margin-top: 20px;
