@@ -8,11 +8,7 @@ const SideBar = styled.div`
   position: absolute;
   width: 10vw;
   height: 100vh;
-  background: radial-gradient(
-    circle at 24.1% 68.8%,
-    #122543 0%,
-    rgb(0, 0, 0) 99.4%
-  );
+  background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -28,11 +24,6 @@ const SideBar = styled.div`
     position: absolute;
     width: 100vw;
     height: 8vh;
-    background: radial-gradient(
-      circle at 24.1% 68.8%,
-      #122543 0%,
-      rgb(0, 0, 0) 99.4%
-    );
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -47,7 +38,7 @@ const HelpButton = styled.button`
   position: absolute;
   transform: translate(50%, 50%);
   background-color: transparent;
-  color: gray;
+  color: rgb(185 193 200);
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -92,7 +83,7 @@ const HelpButton = styled.button`
 `;
 
 const LogoutButton = styled.button`
-  background-color: RGB(0, 60, 95);
+  background-color: #13314c;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;

@@ -10,11 +10,7 @@ const fadeAnimation = keyframes`
     }
     `;
 const ModalContent = styled.div`
-  background: radial-gradient(
-    circle at 24.1% 68.8%,
-    rgb(0, 35, 95) 0%,
-    rgb(0, 0, 0) 99.4%
-  );
+  background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
@@ -74,7 +70,7 @@ const ModalOverlay = styled.div`
 `;
 
 const Button = styled.button`
-  background-color: RGB(0, 60, 95);
+  background-color: #194e7f;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 5px;

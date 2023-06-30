@@ -2,11 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const CardWrapper = styled.div`
-  background: radial-gradient(
-    circle at 24.1% 68.8%,
-    rgb(0, 35, 95) 0%,
-    rgb(0, 0, 0) 99.4%
-  );
+  background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   border-radius: 10px;
   padding: 16px;
   width: 19vw;

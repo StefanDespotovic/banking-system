@@ -11,11 +11,7 @@ const fadeAnimation = keyframes`
   }
 `;
 const WelcomeLogin = styled.div`
-  background: radial-gradient(
-    circle at 24.1% 68.8%,
-    rgb(0, 35, 95) 0%,
-    rgb(0, 0, 0) 99.4%
-  );
+  background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 1.5vh 1.5vw;
@@ -45,7 +41,7 @@ const Title = styled.h1`
 `;
 
 const LoginButton = styled.button`
-  background-color: RGB(0, 60, 95);
+  background-color: #194e7f;
   border: none;
   border-radius: 4px;
   color: #fff;
@@ -67,7 +63,7 @@ const LoginButton = styled.button`
 `;
 
 const RegisterButton = styled.button`
-  background-color: RGB(0, 60, 95);
+  background-color: #194e7f;
   border: none;
   border-radius: 4px;
   color: #fff;

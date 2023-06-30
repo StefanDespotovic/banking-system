@@ -3,11 +3,7 @@ import TransactionsModal from "./Modal";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
-  background: radial-gradient(
-    circle at 24.1% 68.8%,
-    rgb(0, 35, 95) 0%,
-    rgb(0, 0, 0) 99.4%
-  );
+  background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 16px;
@@ -64,7 +60,7 @@ const SellerName = styled.div`
 
 const Date = styled.div`
   font-size: 12px;
-  color: #6c757d;
+  color: rgb(185 193 200);
 `;
 
 const Price = styled.div`
@@ -75,16 +71,16 @@ const Price = styled.div`
 
 const Currency = styled.div`
   font-size: 12px;
-  color: #6c757d;
+  color: rgb(185 193 200);
 `;
 const History = styled.div`
   text-align: center;
-  color: #6c757d;
+  color: rgb(185 193 200);
   margin-bottom: 2vh;
 `;
 
 const Button = styled.button`
-  background-color: RGB(0, 60, 95);
+  background-color: #194e7f;
   color: #ffffff;
   border: none;
   border-radius: 5px;
