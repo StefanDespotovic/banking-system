@@ -29,15 +29,19 @@ const WelcomeLogin = styled.div`
 
   @media (max-width: 768px) {
     width: 75vw;
-    padding: 1vh 3vw;
-    padding-bottom: 3vh;
+    padding: 1vh 2vw;
+    padding-bottom: 2vh;
   }
 `;
 
 const Title = styled.h1`
   color: white;
   margin-bottom: 1.5vh;
-  font-size: 18px;
+  font-size: 28px;
+
+  @media (max-width: 768px) {
+    padding-bottom: 0vh;
+  }
 `;
 
 const LoginButton = styled.button`
@@ -56,8 +60,8 @@ const LoginButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 3.5vw;
-    margin-top: 3vh;
+    font-size: 18px;
+    margin-top: 1vh;
     padding: 1.5vh 3vw;
   }
 `;
@@ -78,8 +82,8 @@ const RegisterButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 3.5vw;
-    margin-top: 3vh;
+    font-size: 18px;
+    margin-top: 1.5vh;
     padding: 1.5vh 3vw;
   }
 `;

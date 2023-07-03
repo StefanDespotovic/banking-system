@@ -40,7 +40,7 @@ const ModalContent = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 20px;
+  font-size: 36px;
   font-weight: bold;
 `;
 

@@ -30,6 +30,7 @@ const RegisterModal = styled.div`
   @media (max-width: 768px) {
     width: 75vw;
     padding: 1vh 3vw;
+    padding-top: 3vh;
     padding-bottom: 3vh;
   }
 `;
@@ -78,6 +79,10 @@ const Button = styled.button`
   &:hover {
     background-color: #0075b9;
   }
+  @media (max-width: 768px) {
+    font-size: 18px;
+    padding: 1.5vh 3vw;
+  }
 `;
 const BackButton = styled.button`
   position: absolute;
@@ -100,6 +105,16 @@ const BackButton = styled.button`
     margin-top: 5vh;
     width: 20vw;
   }
+`;
+const WarningBox = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+  color: white;
+  overflow-wrap: break-word;
 `;
 
 const Register = () => {
@@ -209,6 +224,10 @@ const Register = () => {
           )}
           <Button type="submit">Register</Button>
         </Form>
+        <WarningBox>
+          Because the server is using slow resources, it may take a little
+          longer to connect.
+        </WarningBox>
       </RegisterModal>
       <BackButton onClick={handleBack}>Return</BackButton>
     </>

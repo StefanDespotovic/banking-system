@@ -11,6 +11,7 @@ const fadeAnimation = keyframes`
     opacity: 1;
   }
 `;
+
 const LoginModal = styled.div`
   background: radial-gradient(circle at 24.1% 68.8%, #5885af 0%, #274472 99.4%);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,6 +31,7 @@ const LoginModal = styled.div`
   @media (max-width: 768px) {
     width: 75vw;
     padding: 1vh 3vw;
+    padding-top: 3vh;
     padding-bottom: 3vh;
   }
 `;
@@ -78,10 +80,14 @@ const Button = styled.button`
   &:hover {
     background-color: #0075b9;
   }
+  @media (max-width: 768px) {
+    font-size: 18px;
+    padding: 1.5vh 3vw;
+  }
 `;
 
 const Error = styled.div`
-  color: red;
+  color: #ff8080;
   margin-top: 0.8vh;
 `;
 
@@ -108,10 +114,26 @@ const BackButton = styled.button`
   }
 `;
 
+const WarningBox = styled.div`
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 2rem;
+  width: 100%;
+  text-align: center;
+  color: white;
+  overflow-wrap: break-word;
+`;
+const Description = styled.p`
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+`;
+
 const Login = () => {
   const [showLogin, setShowLogin] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formValues, setFormValues] = useState({ username: "", password: "" });
   const [loginError, setLoginError] = useState("");
 
   const { handleLogin } = useContext(AuthContext);
@@ -119,10 +141,22 @@ const Login = () => {
 
   useEffect(() => {
     setShowLogin(true);
+    setLoginError("");
   }, []);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const { username, password } = formValues;
+    const validationError = validateForm(username, password);
+    if (validationError) {
+      setLoginError(validationError);
+      return;
+    }
     setLoginError("");
 
     try {
@@ -149,41 +183,57 @@ const Login = () => {
         setLoginError(data.error);
       }
     } catch (error) {
-      console.log(JSON.stringify(process.env));
       console.error("Error connecting to server", error);
       setLoginError("Error connecting to server. Please try again.");
     }
+  };
+
+  const validateForm = (username, password) => {
+    if (!username || !password) {
+      return "Please enter both username and password.";
+    }
+    return null;
   };
 
   const handleBack = () => {
     setShowLogin(false);
     setTimeout(() => {
       navigate("/");
-    }, 500); //
+    }, 500);
   };
+
   return (
     <>
       <LoginModal show={showLogin}>
+        <Description>
+          Username: test <br></br>Password: test
+        </Description>
         <Form onSubmit={handleSubmit}>
           {loginError && <Error>{loginError}</Error>}
           <Label>
             <span>Username:</span>
             <input
               type="text"
-              value={username}
-              onChange={(event) => setUsername(event.target.value)}
+              name="username"
+              value={formValues.username}
+              onChange={handleInputChange}
             />
           </Label>
           <Label>
             <span>Password:</span>
             <input
               type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              name="password"
+              value={formValues.password}
+              onChange={handleInputChange}
             />
           </Label>
           <Button type="submit">Login</Button>
         </Form>
+        <WarningBox>
+          Because the server is using slow resources, it may take a little
+          longer to connect.
+        </WarningBox>
       </LoginModal>
       <BackButton onClick={handleBack}>Return</BackButton>
     </>
