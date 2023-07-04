@@ -1,6 +1,6 @@
 # Banking System
 
-This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions. This project is hosted on [Render hosting website](https://render.com/), and database is hosted on [Planetscale](https://planetscale.com/)
+This is a banking system project created using React, Node.js, Express, and a SQL database. The system includes various functionalities such as login and signup forms, checking the current balance, transferring funds from one account to another, displaying a line chart, adding balance to the logged-in account, and checking a transaction history with data for all transactions. This project is hosted on [Render hosting website](https://render.com/), and database is hosted on [Planetscale](https://planetscale.com/). Project is live on this [link](https://banking-system-7gdh.onrender.com/)
 
 ## Technologies Used
 
